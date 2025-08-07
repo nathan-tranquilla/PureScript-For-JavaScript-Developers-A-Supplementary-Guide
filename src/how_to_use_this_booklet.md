@@ -1,5 +1,5 @@
 
-**PureScript Type Classes for JavaScript Developers** is designed as a supplementary guide for JavaScript developers transitioning to PureScript, specifically targeting the concepts covered in chapters 6 through 9 of _PureScript by Example_. These chapters focus on type classes, a powerful but abstract feature of PureScript that can feel unfamiliar to those coming from JavaScript's dynamic and less formalized world. This booklet serves as a drop-in replacement for those chapters, offering a JavaScript-centric perspective to make PureScript's type class system more approachable and intuitive.
+**PureScript for JavaScript Developers** is designed as a supplementary guide for JavaScript developers transitioning to PureScript, specifically targeting the concepts covered in chapters 6 through 9 of _PureScript by Example_. These chapters focus on type classes, a powerful but abstract feature of PureScript that can feel unfamiliar to those coming from JavaScript's dynamic and less formalized world. This booklet serves as a drop-in replacement for those chapters, offering a JavaScript-centric perspective to make PureScript's type class system more approachable and intuitive.
 
 ### Purpose and Approach
 
