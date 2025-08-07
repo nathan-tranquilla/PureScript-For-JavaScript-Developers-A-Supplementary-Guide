@@ -9,6 +9,9 @@
       "mdbook": {
         "pkg-path": "mdbook"
       },
+      "ruby": {
+        "pkg-path": "ruby"
+      },
       "rustc": {
         "pkg-path": "rustc"
       }
@@ -252,6 +255,126 @@
       ],
       "outputs": {
         "out": "/nix/store/2dx5ga6rcamh9a9adcfhisnyddhgg1w2-mdbook-0.4.52"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "ruby",
+      "broken": false,
+      "derivation": "/nix/store/7jmyzn1pvnkcq0fk2bfx2gwqf3kjrfq1-ruby-3.3.8.drv",
+      "description": "Object-oriented language for quick and easy programming",
+      "install_id": "ruby",
+      "license": "Ruby",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=5b09dc45f24cf32316283e62aec81ffee3c3e376",
+      "name": "ruby-3.3.8",
+      "pname": "ruby",
+      "rev": "5b09dc45f24cf32316283e62aec81ffee3c3e376",
+      "rev_count": 838708,
+      "rev_date": "2025-08-03T09:47:33Z",
+      "scrape_date": "2025-08-05T00:29:51.838064Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.3.8",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "devdoc": "/nix/store/ww272rrc5a04j82iryy08d1kppckfr00-ruby-3.3.8-devdoc",
+        "out": "/nix/store/kh6r1csy9kaf2zv638gqbqcmbnbxf453-ruby-3.3.8"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "ruby",
+      "broken": false,
+      "derivation": "/nix/store/dyijxyih8k6adhjnhhp8073v7gvw9b1q-ruby-3.3.8.drv",
+      "description": "Object-oriented language for quick and easy programming",
+      "install_id": "ruby",
+      "license": "Ruby",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=5b09dc45f24cf32316283e62aec81ffee3c3e376",
+      "name": "ruby-3.3.8",
+      "pname": "ruby",
+      "rev": "5b09dc45f24cf32316283e62aec81ffee3c3e376",
+      "rev_count": 838708,
+      "rev_date": "2025-08-03T09:47:33Z",
+      "scrape_date": "2025-08-05T00:50:10.016748Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.3.8",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "devdoc": "/nix/store/gzsfzqq6i29dxbrmn3kjr0zz5b9fjgg6-ruby-3.3.8-devdoc",
+        "out": "/nix/store/22v335kxs3xjcqlhf2qp4pkzwkkkyzgj-ruby-3.3.8"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "ruby",
+      "broken": false,
+      "derivation": "/nix/store/y6xv1pd58ihj67kvm7lddkx8ia89bn5p-ruby-3.3.8.drv",
+      "description": "Object-oriented language for quick and easy programming",
+      "install_id": "ruby",
+      "license": "Ruby",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=5b09dc45f24cf32316283e62aec81ffee3c3e376",
+      "name": "ruby-3.3.8",
+      "pname": "ruby",
+      "rev": "5b09dc45f24cf32316283e62aec81ffee3c3e376",
+      "rev_count": 838708,
+      "rev_date": "2025-08-03T09:47:33Z",
+      "scrape_date": "2025-08-05T01:09:19.953288Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.3.8",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "devdoc": "/nix/store/cxrhsy7a2l71h8vygqhg33rl48gzpg97-ruby-3.3.8-devdoc",
+        "out": "/nix/store/7mx36grg4gnbk142w8pw5s0k6vbdxx86-ruby-3.3.8"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "ruby",
+      "broken": false,
+      "derivation": "/nix/store/3l7v6bz0p3xi6bxgc3d5flvzc98hqwbs-ruby-3.3.8.drv",
+      "description": "Object-oriented language for quick and easy programming",
+      "install_id": "ruby",
+      "license": "Ruby",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=5b09dc45f24cf32316283e62aec81ffee3c3e376",
+      "name": "ruby-3.3.8",
+      "pname": "ruby",
+      "rev": "5b09dc45f24cf32316283e62aec81ffee3c3e376",
+      "rev_count": 838708,
+      "rev_date": "2025-08-03T09:47:33Z",
+      "scrape_date": "2025-08-05T01:33:55.743032Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.3.8",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "devdoc": "/nix/store/ml46djgc8rr1nl2wbyyclx9bz1y2gwx6-ruby-3.3.8-devdoc",
+        "out": "/nix/store/xz4msjk94m7r5kn7fpi186w0vn9lm839-ruby-3.3.8"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
