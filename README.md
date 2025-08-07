@@ -1,2 +1,2 @@
-# PureScript-For-JavaScript-Developers-A-Supplementary-Guide
+# PureScript For JavaScript Developers: A Supplementary Guide
 Unlock PureScript’s type classes with PureScript Type Classes for JavaScript Developers, a concise guide that bridges JavaScript patterns to PureScript’s powerful type system. Designed as a companion to PureScript by Example (chapters 6–9), this booklet makes type classes intuitive through JavaScript-inspired explanations and hands-on examples. 
