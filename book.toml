@@ -1,0 +1,5 @@
+[book]
+authors = ["Nathan Tranquilla"]
+language = "en"
+src = "src"
+title = "PureScript For JavaScript Developers"
