@@ -1,5 +1,3 @@
-require 'fileutils'
-
-task :run => [:setup] do 
+task :run  do 
   system("mdbook serve --open")
 end
