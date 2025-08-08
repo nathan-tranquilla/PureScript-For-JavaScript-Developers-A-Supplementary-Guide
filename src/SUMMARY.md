@@ -10,6 +10,7 @@
   - [Semigroups and Monoids](./chapter_6/Semigroups-and-Monoids.md)
   - [Foldable](./chapter_6/Foldable.md)
   - [Functor](./chapter_6/Functor.md)
-- [Chapter 7: Applicative Validation]()
+- [Chapter 7: Applicative Validation](./chapter_7/chapter_7.md)
+  - [Applicative Functor](./chapter_7/Applicative.md)
 - [Chapter 8: The Effect Monad]()
 - [Chapter 9: Aynchronous Effects]()
