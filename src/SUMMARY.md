@@ -12,5 +12,5 @@
   - [Functor](./Functor.md)
   - [Applicative Functor](./Applicative.md)
   - [Traversable Functor](./Traversable_functor.md)
-  - [Effect]()
+  - [Monads](./Monads.md)
   - [Aynchronous Effects]()
