@@ -1,3 +1,0 @@
-## Chapter Introduction: Type Classes for JavaScript Developers
-
-This chapter introduces PureScript's type classes, a powerful feature for writing safer, more reusable code. Using JavaScript snippets, we’ll show how you’re already working with similar ideas—like checking for specific methods or handling different data types—in a less structured, error-prone way. PureScript’s type classes formalize these patterns, catching errors at compile time and simplifying code for diverse data types. They’re like a safer, smarter version of JavaScript’s “if it has this method, use it” approach! Note that we won’t cover all type class concepts, as some build on PureScript-specific ideas that lack a strong, informal presence in JavaScript.
