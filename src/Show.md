@@ -10,16 +10,20 @@ const userProfile = {
   settings: { theme: "dark", notifications: true },
   preferences: ["email", "sms"]
 };
-console.log(userProfile); // { name: "Alice", settings: { theme: "dark", notifications: true }, preferences: ["email", "sms"] }
-console.log(userProfile.toString()); // "[object Object]"
-console.log(JSON.stringify(userProfile)); // "{\"name\":\"Alice\",\"settings\":{\"theme\":\"dark\",\"notifications\":true},\"preferences\":[\"email\",\"sms\"]}"
+console.log(userProfile); 
+// { name: "Alice", settings: { theme: "dark", notifications: true }, preferences: ["email", "sms"] }
+console.log(userProfile.toString()); 
+// "[object Object]"
+console.log(JSON.stringify(userProfile)); 
+// "{\"name\":\"Alice\",\"settings\":{\"theme\":\"dark\",\"notifications\":true},\"preferences\":[\"email\",\"sms\"]}"
 ```
 
 The default `console.log` is verbose, `toString` is useless, and `JSON.stringify` is better but clunky with quotes and braces. If `settings` lacks a custom `toString` or `toJSON`, or if you add a non-serializable property like a function, things break:
 
 ```javascript
 userProfile.callback = () => console.log("hi");
-console.log(JSON.stringify(userProfile)); // Omits `callback`: "{\"name\":\"Alice\",\"settings\":{\"theme\":\"dark\",\"notifications\":true},\"preferences\":[\"email\",\"sms\"]}"
+console.log(JSON.stringify(userProfile)); 
+// Omits `callback`: "{\"name\":\"Alice\",\"settings\":{\"theme\":\"dark\",\"notifications\":true},\"preferences\":[\"email\",\"sms\"]}"
 ```
 
 You need to manually define `toJSON` or `toString` for every nested object to get useful output, and there’s no guarantee it’ll work consistently. Debugging complex objects in JavaScript often feels like a chore.
