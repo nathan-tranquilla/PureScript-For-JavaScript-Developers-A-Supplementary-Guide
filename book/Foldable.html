@@ -1,0 +1,378 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Foldable - PureScript For JavaScript Developers</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html" class="active"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PureScript For JavaScript Developers</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="foldable"><a class="header" href="#foldable">Foldable</a></h2>
+<h3 id="the-javascript-struggle-reducing-collections"><a class="header" href="#the-javascript-struggle-reducing-collections">The JavaScript Struggle: Reducing Collections</a></h3>
+<p>In JavaScript, reducing a collection to a single value is common, using <code>Array.reduce</code>:</p>
+<pre><code class="language-javascript">const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((acc, x) =&gt; acc + x, 0); // 15
+console.log(sum);
+const concatenated = numbers.reduce((acc, x) =&gt; acc + x.toString(), &quot;&quot;); // &quot;12345&quot;
+console.log(concatenated);
+</code></pre>
+<p>This works for arrays, but for other structures like optional values (similar to Maybe) or pairs (similar to Tuple), there's no standard way. For an optional value, you might hack it:</p>
+<pre><code class="language-javascript">const optionalNumber = 42; // or null
+const sumOptional = optionalNumber ? 0 + optionalNumber : 0; // 42
+console.log(sumOptional);
+</code></pre>
+<p>For a pair:</p>
+<pre><code class="language-javascript">const pair = { first: 1, second: 2 };
+const sumPair = pair.first + pair.second; // 3 - manual, not generalized
+console.log(sumPair);
+</code></pre>
+<p>You must define custom reduce functions for each type, and there's no unified way to fold over different structures. For non-array collections like objects (as maps), you need <code>Object.values</code> or <code>Object.keys</code> with reduce, which is ad hoc and error-prone:</p>
+<pre><code class="language-javascript">const obj = { a: 1, b: 2, c: 3 };
+const sumObj = Object.values(obj).reduce((acc, x) =&gt; acc + x, 0); // 6
+console.log(sumObj);
+</code></pre>
+<p>Even more problematic are <code>Map</code> objects, which are iterable but lack a built-in reduce. You must convert to an array first:</p>
+<pre><code class="language-javascript">const myMap = new Map([['a', 1], ['b', 2], ['c', 3]]);
+const sumMap = Array.from(myMap.values()).reduce((acc, v) =&gt; acc + v, 0); // 6
+console.log(sumMap);
+const concatenatedKeys = Array.from(myMap.keys()).reduce((acc, k) =&gt; acc + k, &quot;&quot;); // &quot;abc&quot;
+console.log(concatenatedKeys);
+</code></pre>
+<p>This conversion is repetitive and inefficient for large Maps. Forget it, and you get runtime errors. No type safety checks if the values are reducible (e.g., numbers for sum).</p>
+<h3 id="purescripts-foldable-type-safe-folding"><a class="header" href="#purescripts-foldable-type-safe-folding">PureScript’s <code>Foldable</code>: Type-Safe Folding</a></h3>
+<p>PureScript’s <code>Foldable</code> type class provides a standardized way to fold over container types like arrays, <code>Maybe</code>, <code>Tuple</code>, and maps, reducing them to a single value. It’s defined as:</p>
+<pre><code class="language-purescript">class Foldable f where
+  foldr :: forall a b. (a -&gt; b -&gt; b) -&gt; b -&gt; f a -&gt; b
+  foldl :: forall a b. (b -&gt; a -&gt; b) -&gt; b -&gt; f a -&gt; b
+  foldMap :: forall a m. Monoid m =&gt; (a -&gt; m) -&gt; f a -&gt; m
+</code></pre>
+<p><code>foldr</code> and <code>foldl</code> are right and left folds, like JS reduceRight and reduce. <code>foldMap</code> is powerful: it maps each element to a monoid value and combines them using the monoid's <code>&lt;&gt;</code>.</p>
+<p>For arrays, <code>foldMap</code> specializes to reducing to a monoid:</p>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Foldable
+logShow $ foldMap show [1, 2, 3, 4, 5]
+</code></pre>
+<p>Expected output:</p>
+<pre><code>&quot;12345&quot;
+unit
+</code></pre>
+<p>Here, we map each number to a string (using <code>show</code>), and combine with the string monoid (concatenation). This is like JS reduce with string concatenation, but generalized.</p>
+<p><code>Foldable</code> works for other types, like <code>Maybe</code> (optional values) and <code>Tuple</code> (pairs). For example, folding a <code>Maybe</code>:</p>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">import Data.Maybe
+logShow $ foldMap show (Just 42)
+logShow $ foldMap show (Nothing :: Maybe Int)
+</code></pre>
+<p>Expected output:</p>
+<pre><code>&quot;42&quot;
+unit
+&quot;&quot;
+unit
+</code></pre>
+<p>Folding a <code>Tuple</code> (note: folds over the second component, treating the first as fixed):</p>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">import Data.Tuple
+logShow $ foldMap show (Tuple 1 2)
+</code></pre>
+<p>Expected output:</p>
+<pre><code>&quot;2&quot;
+unit
+</code></pre>
+<p>For a type like <code>Map</code> (from <code>purescript-ordered-collections</code>), which has a Foldable instance, you can fold directly without conversion:</p>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">import Data.Map as Map
+import Data.Tuple
+myMap = Map.fromFoldable [Tuple &quot;a&quot; 1, Tuple &quot;b&quot; 2, Tuple &quot;c&quot; 3]
+logShow $ foldl (+) 0 myMap
+logShow $ foldMap show myMap
+</code></pre>
+<p>Expected output:</p>
+<pre><code>6
+unit
+&quot;123&quot;
+unit
+</code></pre>
+<p>The compiler ensures all types used with fold functions have a <code>Foldable</code> instance, catching errors at compile time. <code>Foldable</code> captures the notion of an ordered container that can be reduced.</p>
+<h3 id="why-foldable-is-helpful"><a class="header" href="#why-foldable-is-helpful">Why <code>Foldable</code> Is Helpful</a></h3>
+<ol>
+<li>
+<p><strong>Generalized Reducing</strong>: Unlike JS's array-specific <code>reduce</code>, <code>Foldable</code> works on arrays, <code>Maybe</code>, <code>Tuple</code>, maps, and custom types, with a uniform interface.</p>
+</li>
+<li>
+<p><strong>Monoid Integration</strong>: <code>foldMap</code> combines with <code>Monoid</code> (from the previous section) for safe, associative reductions, like reducing to strings or numbers, with compile-time safety.</p>
+</li>
+<li>
+<p><strong>Type-Safe</strong>: No runtime errors from reducing non-reducible structures; the compiler enforces <code>Foldable</code> instances.</p>
+</li>
+</ol>
+<h3 id="practical-example-reducing-user-data"><a class="header" href="#practical-example-reducing-user-data">Practical Example: Reducing User Data</a></h3>
+<p>Suppose you have optional user data (Maybe) or paired data (Tuple). In JS, you'd handle each case manually. In PureScript, <code>foldMap</code> reduces uniformly:</p>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Foldable
+import Data.Maybe
+import Data.Tuple
+logShow $ foldMap (\s -&gt; s &lt;&gt; &quot; logged in&quot;) (Just &quot;user1&quot;)
+logShow $ foldMap (\s -&gt; &quot;status: &quot; &lt;&gt; s) (Tuple &quot;user2&quot; &quot; active&quot;)
+</code></pre>
+<p>Expected output:</p>
+<pre><code>&quot;user1 logged in&quot;
+unit
+&quot; active status:&quot;
+unit
+</code></pre>
+<p>This generalizes reduce, making code reusable across structures.</p>
+<h3 id="repl-exercises"><a class="header" href="#repl-exercises">REPL Exercises</a></h3>
+<p>Try these in a fresh PSCi session (run <code>:clear</code> first). Copy and paste each block:</p>
+<ol>
+<li>
+<p><strong>Fold an Array</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Foldable
+logShow $ foldl (+) 0 [1, 2, 3, 4, 5]
+logShow $ foldMap show [1, 2, 3, 4, 5]
+</code></pre>
+<p>Expected output:</p>
+<pre><code>15
+unit
+&quot;12345&quot;
+unit
+</code></pre>
+</li>
+<li>
+<p><strong>Fold a Maybe</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Foldable
+import Data.Maybe
+logShow $ foldMap show (Just 42)
+logShow $ foldMap show (Nothing :: Maybe Int)
+</code></pre>
+<p>Expected output:</p>
+<pre><code>&quot;42&quot;
+unit
+&quot;&quot;
+unit
+</code></pre>
+</li>
+<li>
+<p><strong>Fold a Tuple</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Foldable
+import Data.Tuple
+logShow $ foldMap show (Tuple 1 2)
+</code></pre>
+<p>Expected output:</p>
+<pre><code>&quot;2&quot;
+unit
+</code></pre>
+</li>
+</ol>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
+<p>JavaScript’s <code>reduce</code> is array-specific and requires manual handling for other structures like optionals or pairs, with clunky conversions for types like Map. PureScript’s <code>Foldable</code> type class generalizes folding over containers like arrays, <code>Maybe</code>, <code>Tuple</code>, and maps, with type-safe, reusable operations. For JavaScript developers, <code>Foldable</code> simplifies reducing diverse data shapes, reducing custom code and errors in aggregations.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="Semigroups-and-Monoids.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="Functor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="Semigroups-and-Monoids.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="Functor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

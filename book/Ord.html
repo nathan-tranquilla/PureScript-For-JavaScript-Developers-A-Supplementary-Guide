@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Ord - PureScript For JavaScript Developers</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html" class="active"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PureScript For JavaScript Developers</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="ord"><a class="header" href="#ord">Ord</a></h2>
+<h3 id="the-javascript-struggle-sorting-objects"><a class="header" href="#the-javascript-struggle-sorting-objects">The JavaScript Struggle: Sorting Objects</a></h3>
+<p>JavaScript developers often need to sort or compare objects, like user profiles, by specific fields. The comparison operators (<code>&lt;</code>, <code>&gt;</code>) work for numbers and strings but fail for objects:</p>
+<pre><code class="language-javascript">const user1 = { id: 1, name: &quot;Alice&quot; };
+const user2 = { id: 2, name: &quot;Bob&quot; };
+console.log(user1 &lt; user2); // false (coerces to strings: &quot;[object Object]&quot;)
+</code></pre>
+<p>JavaScript’s <code>&lt;</code> operator isn’t helpful here, as it compares object references or stringified versions. To sort an array of users by <code>id</code>, you write a custom function for <code>Array.sort</code>:</p>
+<pre><code class="language-javascript">const users = [
+  { id: 2, name: &quot;Bob&quot; },
+  { id: 1, name: &quot;Alice&quot; }
+];
+users.sort((a, b) =&gt; a.id - b.id);
+console.log(users); // [{ id: 1, name: &quot;Alice&quot; }, { id: 2, name: &quot;Bob&quot; }]
+</code></pre>
+<p>This works but requires a new comparison function for every object type or sorting criterion. For nested objects, like a <code>profile</code> with a <code>user</code>, it’s even more tedious:</p>
+<pre><code class="language-javascript">const profile1 = { user: { id: 2, name: &quot;Bob&quot; }, settings: { theme: &quot;dark&quot; } };
+const profile2 = { user: { id: 1, name: &quot;Alice&quot; }, settings: { theme: &quot;light&quot; } };
+profiles.sort((a, b) =&gt; a.user.id - b.user.id);
+</code></pre>
+<p>You must manually navigate nested fields, and there’s no guarantee the comparison is defined or consistent. Libraries like Lodash’s <code>_.orderBy</code> help, but they’re still runtime solutions without type safety.</p>
+<h3 id="purescripts-ord-type-safe-ordering"><a class="header" href="#purescripts-ord-type-safe-ordering">PureScript’s <code>Ord</code>: Type-Safe Ordering</a></h3>
+<p>PureScript’s <code>Ord</code> type class provides a standardized, type-safe way to compare values for ordering, building on the <code>Eq</code> type class for equality. It’s defined as:</p>
+<pre><code class="language-purescript">data Ordering = LT | EQ | GT
+
+class Eq a &lt;= Ord a where
+  compare :: a -&gt; a -&gt; Ordering
+</code></pre>
+<p>The <code>compare</code> function returns <code>LT</code> (less than), <code>EQ</code> (equal), or <code>GT</code> (greater than), and operators like <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, and <code>&gt;=</code> are built on <code>compare</code>. The <code>Eq</code> superclass ensures that <code>compare a b == EQ</code> aligns with <code>a == b</code>. Here’s the <code>profile</code> example in PureScript:</p>
+<pre><code class="language-purescript">newtype AppUser = AppUser { id :: Int, name :: String }
+newtype Settings = Settings { theme :: String }
+newtype Profile = Profile { user :: AppUser, settings :: Settings }
+
+derive instance Eq AppUser
+derive instance Eq Settings
+derive instance Eq Profile
+
+instance Ord AppUser where
+  compare (AppUser u1) (AppUser u2) = compare u1.id u2.id
+
+instance Ord Settings where
+  compare (Settings s1) (Settings s2) = compare s1.theme s2.theme
+
+instance Ord Profile where
+  compare (Profile p1) (Profile p2) = compare p1.user p2.user
+</code></pre>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">&gt; import Prelude
+&gt; let profile1 = Profile { user: UniqueAppUser { id: 2, name: &quot;Bob&quot; }, settings: Settings { theme: &quot;dark&quot; } }
+&gt; let profile2 = Profile { user: UniqueAppUser { id: 1, name: &quot;Alice&quot; }, settings: Settings { theme: &quot;light&quot; } }
+&gt; compare profile1 profile2
+GT
+&gt; profile1 &lt; profile2
+false
+&gt; import Data.Array
+&gt; import Effect.Console
+&gt; logShow $ sort [profile1, profile2]
+[(Profile (UniqueAppUser 1 &quot;Alice&quot;) (Settings &quot;light&quot;)), (Profile (UniqueAppUser 2 &quot;Bob&quot;) (Settings &quot;dark&quot;))]
+unit
+</code></pre>
+<p>The <code>sort</code> function uses <code>Ord</code> to order by <code>user.id</code>. The compiler ensures every type used with <code>compare</code> or <code>&lt;</code> has an <code>Ord</code> instance, preventing errors:</p>
+<pre><code class="language-purescript">&gt; compare (\n -&gt; n + 1) (\n -&gt; n + 1)
+-- Error: No type class instance was found for Data.Ord.Ord (Int -&gt; Int)
+</code></pre>
+<h3 id="why-ord-excites-javascript-developers"><a class="header" href="#why-ord-excites-javascript-developers">Why <code>Ord</code> Excites JavaScript Developers</a></h3>
+<ol>
+<li>
+<p><strong>No Custom Sort Functions</strong>: Unlike JavaScript’s <code>sort</code> with one-off comparison functions, <code>Ord</code> defines a reusable <code>compare</code> function per type, making ordering consistent.</p>
+</li>
+<li>
+<p><strong>Composes Effortlessly</strong>: The <code>Profile</code> instance reuses <code>UniqueAppUser</code>’s <code>Ord</code> instance, which reuses <code>Int</code>’s. No need to manually dig into nested fields like in JavaScript.</p>
+</li>
+<li>
+<p><strong>Type-Safe Sorting</strong>: Compile-time checks ensure <code>Ord</code> instances exist, eliminating runtime errors from undefined comparisons.</p>
+</li>
+</ol>
+<h3 id="but-what-about-lodashs-_orderby"><a class="header" href="#but-what-about-lodashs-_orderby">But What About Lodash’s <code>_.orderBy</code>?</a></h3>
+<p>Lodash’s <code>_.orderBy</code> simplifies sorting:</p>
+<pre><code class="language-javascript">const _ = require('lodash');
+console.log(_.orderBy([profile1, profile2], ['user.id'], ['asc']));
+// [{ user: { id: 1, name: &quot;Alice&quot; }, settings: { theme: &quot;light&quot; } }, ...]
+</code></pre>
+<p>It’s flexible but runtime-based. Misspelling <code>user.id</code> or using an invalid property causes errors at runtime. <code>Ord</code> ensures correctness at compile time and integrates with PureScript’s <code>sort</code>, streamlining type-safe development.</p>
+<h3 id="repl-exercises"><a class="header" href="#repl-exercises">REPL Exercises</a></h3>
+<p>Try these in a fresh PSCi session (run <code>:reset</code> first) to explore <code>Ord</code>. Copy and paste each block:</p>
+<ol>
+<li>
+<p><strong>Compare Basic Types</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+compare 1 2
+compare &quot;A&quot; &quot;Z&quot;
+</code></pre>
+<p>Expected output:</p>
+<pre><code>LT
+LT
+</code></pre>
+</li>
+<li>
+<p><strong>Compare a Custom Type</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+newtype UniqueAppUser = UniqueAppUser { id :: Int, name :: String }
+derive instance Eq UniqueAppUser
+instance Show UniqueAppUser where
+  show (UniqueAppUser { id, name }) = &quot;(UniqueAppUser &quot; &lt;&gt; show id &lt;&gt; &quot; &quot; &lt;&gt; show name &lt;&gt; &quot;)&quot;
+instance Ord UniqueAppUser where
+  compare (UniqueAppUser u1) (UniqueAppUser u2) = compare u1.id u2.id
+compare (UniqueAppUser { id: 1, name: &quot;Alice&quot; }) (UniqueAppUser { id: 2, name: &quot;Bob&quot; })
+(UniqueAppUser { id: 1, name: &quot;Alice&quot; }) &lt; (UniqueAppUser { id: 2, name: &quot;Bob&quot; })
+</code></pre>
+<p>Expected output:</p>
+<pre><code>LT
+true
+</code></pre>
+</li>
+<li>
+<p><strong>Sort an Array</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+import Data.Array
+import Effect.Console
+newtype UniqueAppUser = UniqueAppUser { id :: Int, name :: String }
+derive instance Eq UniqueAppUser
+instance Show UniqueAppUser where
+  show (UniqueAppUser { id, name }) = &quot;(UniqueAppUser &quot; &lt;&gt; show id &lt;&gt; &quot; &quot; &lt;&gt; show name &lt;&gt; &quot;)&quot;
+instance Ord UniqueAppUser where
+  compare (UniqueAppUser u1) (UniqueAppUser u2) = compare u1.id u2.id
+logShow $ sort [UniqueAppUser { id: 2, name: &quot;Bob&quot; }, UniqueAppUser { id: 1, name: &quot;Alice&quot; }]
+</code></pre>
+<p>Expected output:</p>
+<pre><code>[(UniqueAppUser 1 &quot;Alice&quot;), (UniqueAppUser 2 &quot;Bob&quot;)]
+unit
+</code></pre>
+</li>
+<li>
+<p><strong>Test Type Safety</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+compare (\n -&gt; n + 1) (\n -&gt; n + 1)
+</code></pre>
+<p>Expected output:</p>
+<pre><code>Error: No type class instance was found for Data.Ord.Ord (Int -&gt; Int)
+</code></pre>
+</li>
+</ol>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
+<p>JavaScript’s sorting requires custom, error-prone comparison functions for objects like <code>profile</code>. PureScript’s <code>Ord</code> type class offers a type-safe, reusable way to define ordering, with automatic composition for nested types and compile-time guarantees. For JavaScript developers, <code>Ord</code> eliminates the hassle of ad hoc sorting, making PureScript’s type-driven approach a powerful tool for reliable code.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="Eq.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="Semigroups-and-Monoids.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="Eq.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="Semigroups-and-Monoids.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

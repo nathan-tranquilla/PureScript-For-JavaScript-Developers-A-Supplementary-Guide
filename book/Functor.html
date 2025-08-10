@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Functor - PureScript For JavaScript Developers</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html" class="active"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PureScript For JavaScript Developers</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="functor"><a class="header" href="#functor">Functor</a></h2>
+<h3 id="javascript-context-mapping-over-structures"><a class="header" href="#javascript-context-mapping-over-structures">JavaScript Context: Mapping Over Structures</a></h3>
+<p>In JavaScript, mapping over arrays to transform elements is common with <code>Array.map</code>:</p>
+<pre><code class="language-javascript">const numbers = [1, 2, 3];
+const doubled = numbers.map(x =&gt; x * 2); // [2, 4, 6]
+console.log(doubled);
+</code></pre>
+<p>For other structures, it's less formalized. For optionals (null/undefined):</p>
+<pre><code class="language-javascript">const optionalNumber = 42; // or null
+const doubledOptional = optionalNumber !== null ? optionalNumber * 2 : null; // 84 or null
+console.log(doubledOptional);
+</code></pre>
+<p>For promises:</p>
+<pre><code class="language-javascript">const promise = Promise.resolve(42);
+const doubledPromise = promise.then(x =&gt; x * 2); // resolves to 84
+doubledPromise.then(console.log);
+</code></pre>
+<p>For objects (as maps):</p>
+<pre><code class="language-javascript">const obj = { a: 1, b: 2, c: 3 };
+const doubledObj = Object.fromEntries(Object.entries(obj).map(([k, v]) =&gt; [k, v * 2])); // { a: 2, b: 4, c: 6 }
+console.log(doubledObj);
+</code></pre>
+<p>This is flexible but ad hoc—you write custom mapping for each type, with no guarantees like identity (mapping x =&gt; x returns original) or composition (mapping f then g equals mapping g ◦ f). Chained maps might break if not handled properly, and there's no type safety for mappable structures.</p>
+<p>To show how composition can go wrong, consider a custom map with side effects (like logging):</p>
+<pre><code class="language-javascript">let count = 0;
+function badMap(f, arr) {
+  count++; // Side effect: increment count
+  return arr.map(f);
+}
+const f = x =&gt; x * 2;
+const g = x =&gt; x + 1;
+const arr = [1, 2, 3];
+const left = badMap(f, badMap(g, arr)); // count incremented twice
+console.log(left, count); // [4, 6, 8], 2
+count = 0; // Reset for next
+const right = badMap(x =&gt; f(g(x)), arr); // count incremented once
+console.log(right, count); // [4, 6, 8], 1
+</code></pre>
+<p>The results are the same, but the side effects (count) differ based on grouping, violating composition predictability. In real code, this could cause bugs with shared state or performance issues.</p>
+<h3 id="purescripts-functor-a-structured-approach"><a class="header" href="#purescripts-functor-a-structured-approach">PureScript’s <code>Functor</code>: A Structured Approach</a></h3>
+<p>PureScript’s <code>Functor</code> type class formalizes mapping over structures, with laws for predictability. It’s defined as:</p>
+<pre><code class="language-purescript">class Functor f where
+  map :: forall a b. (a -&gt; b) -&gt; f a -&gt; f b
+</code></pre>
+<p>The <code>map</code> function (alias <code>&lt;$&gt;</code>) lifts a function over the structure. Laws: identity (map id == id) and composition (map (f ◦ g) == map f ◦ map g).</p>
+<p>For arrays:</p>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Array
+logShow $ map (\x -&gt; x * 2) [1, 2, 3]
+</code></pre>
+<p>Expected output:</p>
+<pre><code>[2,4,6]
+unit
+</code></pre>
+<p>For <code>Maybe</code>:</p>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">import Data.Maybe
+logShow $ map (\x -&gt; x * 2) (Just 42)
+logShow $ map (\x -&gt; x * 2) Nothing
+</code></pre>
+<p>Expected output:</p>
+<pre><code>(Just 84)
+unit
+Nothing
+unit
+</code></pre>
+<p>For <code>Tuple</code> (maps second component):</p>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">import Data.Tuple
+logShow $ map (\x -&gt; x * 2) (Tuple &quot;fixed&quot; 42)
+</code></pre>
+<p>Expected output:</p>
+<pre><code>(Tuple &quot;fixed&quot; 84)
+unit
+</code></pre>
+<p>For asynchronous effects (like JS promises, via <code>Aff</code> from <code>purescript-aff</code>):</p>
+<p>In PSCi (assuming <code>Aff</code> is installed):</p>
+<pre><code class="language-purescript">import Aff (Aff, launchAff_)
+import Effect.Console
+import Effect.Class (liftEffect)
+launchAff_ do
+  doubled &lt;- map (\x -&gt; x * 2) (pure 42 :: Aff Int)  // pure is like Promise.resolve
+  liftEffect $ logShow doubled
+</code></pre>
+<p>Expected output:</p>
+<pre><code>84
+unit
+</code></pre>
+<p>The compiler ensures <code>Functor</code> instances exist, catching errors at compile time. Laws make mapping reliable—e.g., composition preserves order without side effects.</p>
+<h3 id="why-purescripts-functor-is-helpful"><a class="header" href="#why-purescripts-functor-is-helpful">Why PureScript’s <code>Functor</code> Is Helpful</a></h3>
+<ol>
+<li>
+<p><strong>Compile-Time Safety</strong>: In JS, mapping non-mappable types fails at runtime. Functor requires instances, catching errors early.</p>
+</li>
+<li>
+<p><strong>Consistent Mapping</strong>: Uniform <code>map</code> for arrays, <code>Maybe</code>, <code>Tuple</code>, asynchronous effects (<code>Aff</code>), maps— no custom hacks.</p>
+</li>
+<li>
+<p><strong>Laws for Predictability</strong>: Identity and composition ensure mapping behaves as expected, unlike JS where chained maps can surprise (e.g., with side effects).</p>
+</li>
+</ol>
+<h3 id="practical-example-mapping-user-data"><a class="header" href="#practical-example-mapping-user-data">Practical Example: Mapping User Data</a></h3>
+<p>Map over optional data (Maybe) or pairs (Tuple) uniformly:</p>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Maybe
+import Data.Tuple
+logShow $ map (\s -&gt; s &lt;&gt; &quot; logged in&quot;) (Just &quot;user1&quot;)
+logShow $ map (\s -&gt; s &lt;&gt; &quot; status:&quot;) (Tuple &quot;user2&quot; &quot;active&quot;)
+</code></pre>
+<p>Expected output:</p>
+<pre><code>(Just &quot;user1 logged in&quot;)
+unit
+(Tuple &quot;user2&quot; &quot;active status:&quot;)
+unit
+</code></pre>
+<p>This generalizes mapping, reusable across structures.</p>
+<h3 id="repl-exercises"><a class="header" href="#repl-exercises">REPL Exercises</a></h3>
+<p>Try these in a fresh PSCi session (run <code>:clear</code> first). Copy and paste each block:</p>
+<ol>
+<li>
+<p><strong>Map an Array</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Array
+logShow $ map (\x -&gt; x * 2) [1, 2, 3]
+</code></pre>
+<p>Expected output:</p>
+<pre><code>[2,4,6]
+unit
+</code></pre>
+</li>
+<li>
+<p><strong>Map a Maybe</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Maybe
+logShow $ map (\x -&gt; x * 2) (Just 42)
+logShow $ map (\x -&gt; x * 2) Nothing
+</code></pre>
+<p>Expected output:</p>
+<pre><code>(Just 84)
+unit
+Nothing
+unit
+</code></pre>
+</li>
+<li>
+<p><strong>Map a Tuple</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Tuple
+logShow $ map (\x -&gt; x * 2) (Tuple &quot;fixed&quot; 42)
+</code></pre>
+<p>Expected output:</p>
+<pre><code>(Tuple &quot;fixed&quot; 84)
+unit
+</code></pre>
+</li>
+</ol>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
+<p>JavaScript’s mapping is structure-specific and requires manual handling for optionals or pairs. PureScript’s <code>Functor</code> type class generalizes mapping over containers like arrays, <code>Maybe</code>, <code>Tuple</code>, with type-safe, law-abiding operations. For JavaScript developers, <code>Functor</code> simplifies transforming data in diverse structures, reducing custom code and errors in transformations.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="Foldable.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="Applicative.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="Foldable.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="Applicative.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

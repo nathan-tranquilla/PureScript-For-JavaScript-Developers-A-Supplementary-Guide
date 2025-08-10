@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>What&#x27;s Next? - PureScript For JavaScript Developers</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html" class="active"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PureScript For JavaScript Developers</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="whats-next"><a class="header" href="#whats-next">What's Next</a></h2>
+<p>Congratulations on working through <strong>PureScript for JavaScript Developers</strong>! You’ve explored key type classes from Chapters 6–8 of <em>PureScript by Example</em>, connecting familiar JavaScript patterns—like string conversion, equality checks, array operations, form validation, and Promise chaining—to PureScript’s structured, type-safe abstractions. By now, you should feel confident recognizing how <code>Show</code>, <code>Eq</code>, <code>Ord</code>, <code>Semigroup</code>, <code>Monoid</code>, <code>Functor</code>, <code>Foldable</code>, <code>Applicative</code>, <code>Traversable</code>, and <code>Monad</code> formalize JavaScript’s informal practices, making your code more reliable without exceeding the complexity of modern web development.</p>
+<h3 id="where-to-go-from-here"><a class="header" href="#where-to-go-from-here">Where to Go from Here</a></h3>
+<p>This booklet has prepared you to dive deeper into PureScript by bridging JavaScript’s dynamic patterns with PureScript’s type-safe type classes. To build on this foundation, we recommend returning to <em>PureScript by Example</em> and picking up with the <code>Effect</code> and <code>Aff</code> monads in Chapter 8 and beyond:</p>
+<ul>
+<li><strong>Effect Monad</strong>: The <code>Effect</code> monad handles native side effects like console logging, DOM manipulation, or random number generation—tasks you’re familiar with from JavaScript functions like <code>console.log</code> or <code>Math.random</code>. Chapter 8 of <em>PureScript by Example</em> explores how <code>Effect</code> encapsulates these side effects safely, offering a structured alternative to JavaScript’s ad hoc approach. Try the exercises to see how <code>Effect</code> integrates with real-world applications, like building interactive web interfaces.</li>
+<li><strong>Aff Monad</strong>: The <code>Aff</code> monad manages asynchronous computations, similar to JavaScript’s Promises or <code>async/await</code>. It’s a natural extension of the <code>Monad</code> concepts you’ve learned, providing type-safe ways to handle API calls, timeouts, or other async tasks. Continue with <em>PureScript by Example</em>’s examples and exercises in later chapters to apply <code>Aff</code> in practical scenarios, such as fetching data or handling user input.</li>
+</ul>
+<h3 id="how-to-proceed"><a class="header" href="#how-to-proceed">How to Proceed</a></h3>
+<ol>
+<li><strong>Explore Chapter 8’s Effect and Aff Sections</strong>: Dive into the <code>Effect</code> and <code>Aff</code> sections of Chapter 8 to see how PureScript handles side effects and async operations. Experiment with the provided examples in <code>spago repl</code> or a PureScript project to build familiarity.</li>
+<li><strong>Continue with Chapter 9 and Beyond</strong>: <em>PureScript by Example</em>’s later chapters introduce advanced topics like monad transformers and real-world applications. These build on the type class foundation you’ve gained, showing how PureScript powers robust web applications.</li>
+<li><strong>Apply to Your Projects</strong>: Try using PureScript’s type classes in small projects, like validating forms or processing data, to see how they improve on JavaScript’s patterns. Compare your PureScript solutions to JavaScript equivalents to appreciate the type safety and clarity.</li>
+</ol>
+<h3 id="why-continue"><a class="header" href="#why-continue">Why Continue?</a></h3>
+<p>The concepts you’ve learned—type classes for polymorphism, data combination, mapping, validation, and chaining—are the backbone of PureScript’s power. By exploring <code>Effect</code> and <code>Aff</code>, you’ll see how PureScript manages real-world side effects, making it a practical tool for modern web development. These monads are direct analogs to JavaScript’s side-effecting functions and async workflows, so you’ll find them intuitive yet more robust.</p>
+<p>Keep experimenting in the REPL, tackle the exercises in <em>PureScript by Example</em>, and start building with PureScript to bring type safety to your JavaScript expertise. You’re well on your way to writing reliable, maintainable code with PureScript’s elegant abstractions!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="Monads.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="Monads.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

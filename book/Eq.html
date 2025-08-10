@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Eq - PureScript For JavaScript Developers</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html" class="active"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PureScript For JavaScript Developers</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="eq"><a class="header" href="#eq">Eq</a></h2>
+<h3 id="the-javascript-struggle-comparing-objects"><a class="header" href="#the-javascript-struggle-comparing-objects">The JavaScript Struggle: Comparing Objects</a></h3>
+<p>In JavaScript, comparing objects for equality is a common task, but it’s fraught with pitfalls. The <code>===</code> operator checks for strict equality, which works well for primitives like numbers and strings but often fails for complex objects:</p>
+<pre><code class="language-javascript">const user1 = { id: 1, name: &quot;Alice&quot; };
+const user2 = { id: 1, name: &quot;Alice&quot; };
+console.log(user1 === user2); // false
+console.log(user1 == user2); // false
+</code></pre>
+<p>Why? JavaScript’s <code>===</code> compares object references, not values. Even though <code>user1</code> and <code>user2</code> look identical, they’re different objects in memory. To compare their contents, you’d need a custom function:</p>
+<pre><code class="language-javascript">function areUsersEqual(user1, user2) {
+  return user1.id === user2.id &amp;&amp; user1.name === user2.name;
+}
+console.log(areUsersEqual(user1, user2)); // true
+</code></pre>
+<p>This works but is tedious. You must write a new comparison function for every object type, and there’s no built-in way to enforce that objects support equality checks. For nested objects, it gets messier:</p>
+<pre><code class="language-javascript">const profile1 = { user: { id: 1, name: &quot;Alice&quot; }, settings: { theme: &quot;dark&quot; } };
+const profile2 = { user: { id: 1, name: &quot;Alice&quot; }, settings: { theme: &quot;dark&quot; } };
+console.log(areUsersEqual(profile1, profile2)); // Error: settings not checked
+</code></pre>
+<p>You’d need to extend <code>areUsersEqual</code> to recursively compare <code>settings</code>, and if the object structure changes, you must update the function manually. Libraries like Lodash’s <code>_.isEqual</code> can help, but they’re still runtime solutions with no guarantee of correctness for all types.</p>
+<h3 id="purescripts-eq-type-safe-equality"><a class="header" href="#purescripts-eq-type-safe-equality">PureScript’s <code>Eq</code>: Type-Safe Equality</a></h3>
+<p>PureScript’s <code>Eq</code> type class provides a standardized, type-safe way to compare values for equality. It’s defined as:</p>
+<pre><code class="language-purescript">class Eq a where
+  eq :: a -&gt; a -&gt; Boolean
+</code></pre>
+<p>The <code>==</code> operator is an alias for <code>eq</code>, and any type used with <code>==</code> must have an <code>Eq</code> instance, enforced by the compiler. Let’s define the <code>profile</code> example in PureScript:</p>
+<pre><code class="language-purescript">newtype User = User { id :: Int, name :: String }
+newtype Profile = Profile { user :: User, settings :: Settings }
+newtype Settings = Settings { theme :: String }
+
+instance Eq User where
+  eq (User u1) (User u2) = u1.id == u2.id &amp;&amp; u1.name == u2.name
+
+instance Eq Settings where
+  eq (Settings s1) (Settings s2) = s1.theme == s2.theme
+
+instance Eq Profile where
+  eq (Profile p1) (Profile p2) = p1.user == p2.user &amp;&amp; p1.settings == p2.settings
+</code></pre>
+<p>In PSCi:</p>
+<pre><code class="language-purescript">&gt; import Prelude
+&gt; let profile1 = Profile { user: User { id: 1, name: &quot;Alice&quot; }, settings: Settings { theme: &quot;dark&quot; } }
+&gt; let profile2 = Profile { user: User { id: 1, name: &quot;Alice&quot; }, settings: Settings { theme: &quot;dark&quot; } }
+&gt; profile1 == profile2
+true
+</code></pre>
+<p>This comparison is clean, and the compiler ensures every type used with <code>==</code> has an <code>Eq</code> instance. Trying to compare unsupported types fails at compile time:</p>
+<pre><code class="language-purescript">&gt; (\n -&gt; n + 1) == (\n -&gt; n + 1)
+-- Error: No type class instance was found for Data.Eq.Eq (Int -&gt; Int)
+</code></pre>
+<h3 id="why-eq-excites-javascript-developers"><a class="header" href="#why-eq-excites-javascript-developers">Why <code>Eq</code> Excites JavaScript Developers</a></h3>
+<ol>
+<li>
+<p><strong>No More Reference Equality Traps</strong>: Unlike JavaScript’s <code>===</code>, which fails for identical objects, <code>Eq</code> lets you define value-based equality for custom types like <code>Profile</code>, making comparisons intuitive.</p>
+</li>
+<li>
+<p><strong>Automatic Composition</strong>: The <code>Profile</code> instance reuses <code>Eq</code> instances for <code>User</code> and <code>Settings</code>. You don’t need to write recursive comparison logic manually, unlike JavaScript’s custom functions or <code>_.isEqual</code>.</p>
+</li>
+<li>
+<p><strong>Type-Safe Guarantees</strong>: The compiler enforces that every type used with <code>==</code> has an <code>Eq</code> instance, catching errors early. In JavaScript, you might not notice a missing or incorrect comparison until runtime.</p>
+</li>
+</ol>
+<h3 id="but-what-about-lodashs-_isequal"><a class="header" href="#but-what-about-lodashs-_isequal">But What About Lodash’s <code>_.isEqual</code>?</a></h3>
+<p>JavaScript developers might use <code>_.isEqual</code> for deep equality checks:</p>
+<pre><code class="language-javascript">const _ = require('lodash');
+console.log(_.isEqual(profile1, profile2)); // true
+</code></pre>
+<p><code>_.isEqual</code> is convenient and handles nested objects, but it’s a runtime solution with no type checking. It works for any object but might hide bugs if objects have non-comparable properties (e.g., functions). <code>Eq</code> requires explicit instances, ensuring correctness at compile time, and is tailored for PureScript’s type-driven development, where you want precise control over equality.</p>
+<h3 id="repl-exercises"><a class="header" href="#repl-exercises">REPL Exercises</a></h3>
+<p>Try these in PSCi to explore <code>Eq</code>. Copy and paste each block:</p>
+<ol>
+<li>
+<p><strong>Compare Basic Types</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+1 == 2
+&quot;Test&quot; == &quot;Test&quot;
+</code></pre>
+<p>Expected output:</p>
+<pre><code>false
+true
+</code></pre>
+</li>
+<li>
+<p><strong>Compare a Custom Type</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+newtype User = User { id :: Int, name :: String }
+instance Eq User where
+  eq (User u1) (User u2) = u1.id == u2.id &amp;&amp; u1.name == u2.name
+User { id: 1, name: &quot;Alice&quot; } == User { id: 1, name: &quot;Alice&quot; }
+User { id: 1, name: &quot;Alice&quot; } == User { id: 2, name: &quot;Bob&quot; }
+</code></pre>
+<p>Expected output:</p>
+<pre><code>true
+false
+</code></pre>
+</li>
+<li>
+<p><strong>Compare a Nested Type</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+newtype User = User { id :: Int, name :: String }
+newtype Profile = Profile { user :: User }
+instance Eq User where
+  eq (User u1) (User u2) = u1.id == u2.id &amp;&amp; u1.name == u2.name
+instance Eq Profile where
+  eq (Profile p1) (Profile p2) = p1.user == p2.user
+Profile { user: User { id: 1, name: &quot;Alice&quot; } } == Profile { user: User { id: 1, name: &quot;Alice&quot; } }
+</code></pre>
+<p>Expected output:</p>
+<pre><code>true
+</code></pre>
+</li>
+<li>
+<p><strong>Test Type Safety</strong>:</p>
+<pre><code class="language-purescript">import Prelude
+(\n -&gt; n + 1) == (\n -&gt; n + 1)
+</code></pre>
+<p>Expected output: A compile-time error:</p>
+<pre><code>Error: No type class instance was found for Data.Eq.Eq (Int -&gt; Int)
+</code></pre>
+</li>
+</ol>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
+<p>JavaScript’s <code>===</code> and <code>_.isEqual</code> struggle with object comparisons, requiring manual functions or runtime checks. PureScript’s <code>Eq</code> type class offers a type-safe, composable way to define equality for custom types like <code>Profile</code>, catching errors at compile time and simplifying nested comparisons. For JavaScript developers, <code>Eq</code> eliminates the guesswork of equality checks, making PureScript’s type-driven approach a game-changer for reliable code.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="Show.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="Ord.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="Show.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="Ord.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
