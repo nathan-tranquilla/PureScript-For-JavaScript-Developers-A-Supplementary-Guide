@@ -13,3 +13,4 @@
   - [Applicative Functor](./Applicative.md)
   - [Traversable Functor](./Traversable_functor.md)
   - [Monads](./Monads.md)
+- [What's Next?](./What_next.md)
