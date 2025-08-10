@@ -13,4 +13,3 @@
   - [Applicative Functor](./Applicative.md)
   - [Traversable Functor](./Traversable_functor.md)
   - [Monads](./Monads.md)
-  - [Aynchronous Effects]()

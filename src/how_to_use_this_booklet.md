@@ -1,6 +1,6 @@
 # How To Use This Booklet
 
-**PureScript for JavaScript Developers** is a supplementary guide designed for JavaScript developers transitioning to PureScript, focusing on selected type class concepts from Chapters 6–9 of *PureScript by Example*. These chapters introduce type classes, a powerful feature that can feel abstract to those used to JavaScript’s dynamic, informal patterns. This booklet serves as a companion to those chapters, offering a JavaScript-centric perspective to make PureScript’s type classes intuitive by connecting them to familiar JavaScript practices.
+**PureScript for JavaScript Developers** is a supplementary guide designed for JavaScript developers transitioning to PureScript, focusing on selected type class concepts from Chapters 6–8 of *PureScript by Example*. These chapters introduce type classes, a powerful feature that can feel abstract to those used to JavaScript’s dynamic, informal patterns. This booklet serves as a companion to those chapters, offering a JavaScript-centric perspective to make PureScript’s type classes intuitive by connecting them to familiar JavaScript practices.
 
 ### Purpose and Approach
 
@@ -14,7 +14,7 @@ As a JavaScript developer, you likely use patterns like string conversion, equal
 
 This booklet is for JavaScript developers who are:
 
-- Learning PureScript and finding the type class concepts in Chapters 6–9 of *PureScript by Example* abstract or hard to relate to.
+- Learning PureScript and finding the type class concepts in Chapters 6–8 of *PureScript by Example* abstract or hard to relate to.
 - Comfortable with JavaScript (ES5 or later, including modern frameworks like React or Node.js) but new to strongly-typed functional programming.
 - Curious about how PureScript’s type system can enhance familiar JavaScript patterns with safety and clarity.
 
