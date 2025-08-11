@@ -40,6 +40,8 @@ class Eq a where
 The `==` operator is an alias for `eq`, and any type used with `==` must have an `Eq` instance, enforced by the compiler. Let’s define the `profile` example in PureScript:
 
 ```purescript
+import Prelude
+
 newtype User = User { id :: Int, name :: String }
 newtype Profile = Profile { user :: User, settings :: Settings }
 newtype Settings = Settings { theme :: String }
@@ -52,15 +54,14 @@ instance Eq Settings where
 
 instance Eq Profile where
   eq (Profile p1) (Profile p2) = p1.user == p2.user && p1.settings == p2.settings
+
+profile1 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
+profile2 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
+profile1 == profile2
 ```
 
-In PSCi:
-
-```purescript
-> import Prelude
-> let profile1 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
-> let profile2 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
-> profile1 == profile2
+Expected Output:
+```
 true
 ```
 
