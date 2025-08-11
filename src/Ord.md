@@ -45,6 +45,10 @@ class Eq a <= Ord a where
 The `compare` function returns `LT` (less than), `EQ` (equal), or `GT` (greater than), and operators like `<`, `>`, `<=`, and `>=` are built on `compare`. The `Eq` superclass ensures that `compare a b == EQ` aligns with `a == b`. Here’s the `profile` example in PureScript:
 
 ```purescript
+import Prelude
+import Data.Array
+import Effect.Console
+
 newtype AppUser = AppUser { id :: Int, name :: String }
 newtype Settings = Settings { theme :: String }
 newtype Profile = Profile { user :: AppUser, settings :: Settings }
@@ -61,23 +65,36 @@ instance Ord Settings where
 
 instance Ord Profile where
   compare (Profile p1) (Profile p2) = compare p1.user p2.user
+
+instance Show Settings where
+  show (Settings { theme }) = "(Settings " <> show theme <> " )"
+
+instance Show AppUser where
+  show (AppUser { id, name }) = "(AppUser " <> show id <> " " <> show name <> ")"
+
+instance Show Profile where
+  show (Profile { user, settings}) = "(Profile " <> show user <> " " <> show settings <> ")"
+
+profile1 = Profile { user: AppUser { id: 2, name: "Bob" }, settings: Settings { theme: "dark" } }
+profile2 = Profile { user: AppUser { id: 1, name: "Alice" }, settings: Settings { theme: "light" } }
+
+compare profile1 profile2
+
+profile1 < profile2
+
+logShow $ sort [profile1, profile2]
+
+
 ```
 
-In PSCi:
-
-```purescript
-> import Prelude
-> let profile1 = Profile { user: UniqueAppUser { id: 2, name: "Bob" }, settings: Settings { theme: "dark" } }
-> let profile2 = Profile { user: UniqueAppUser { id: 1, name: "Alice" }, settings: Settings { theme: "light" } }
-> compare profile1 profile2
+Expected Output:
+```
 GT
-> profile1 < profile2
+
 false
-> import Data.Array
-> import Effect.Console
-> logShow $ sort [profile1, profile2]
-[(Profile (UniqueAppUser 1 "Alice") (Settings "light")), (Profile (UniqueAppUser 2 "Bob") (Settings "dark"))]
-unit
+
+[(Profile (AppUser 1 "Alice") (Settings "light")), (Profile (AppUser 2 "Bob") (Settings "dark"))]
+
 ```
 
 The `sort` function uses `Ord` to order by `user.id`. The compiler ensures every type used with `compare` or `<` has an `Ord` instance, preventing errors:
@@ -91,7 +108,7 @@ The `sort` function uses `Ord` to order by `user.id`. The compiler ensures every
 
 1. **No Custom Sort Functions**: Unlike JavaScript’s `sort` with one-off comparison functions, `Ord` defines a reusable `compare` function per type, making ordering consistent.
     
-2. **Composes Effortlessly**: The `Profile` instance reuses `UniqueAppUser`’s `Ord` instance, which reuses `Int`’s. No need to manually dig into nested fields like in JavaScript.
+2. **Composes Effortlessly**: The `Profile` instance reuses `AppUser`’s `Ord` instance, which reuses `Int`’s. No need to manually dig into nested fields like in JavaScript.
     
 3. **Type-Safe Sorting**: Compile-time checks ensure `Ord` instances exist, eliminating runtime errors from undefined comparisons.
     
@@ -131,42 +148,63 @@ Try these in a fresh PSCi session (run `:reset` first) to explore `Ord`. Copy an
     
     ```purescript
     import Prelude
-    newtype UniqueAppUser = UniqueAppUser { id :: Int, name :: String }
-    derive instance Eq UniqueAppUser
-    instance Show UniqueAppUser where
-      show (UniqueAppUser { id, name }) = "(UniqueAppUser " <> show id <> " " <> show name <> ")"
-    instance Ord UniqueAppUser where
-      compare (UniqueAppUser u1) (UniqueAppUser u2) = compare u1.id u2.id
-    compare (UniqueAppUser { id: 1, name: "Alice" }) (UniqueAppUser { id: 2, name: "Bob" })
-    (UniqueAppUser { id: 1, name: "Alice" }) < (UniqueAppUser { id: 2, name: "Bob" })
+    import Data.Array
+    import Effect.Console
+
+    newtype AppUser = AppUser { id :: Int, name :: String }
+    newtype Settings = Settings { theme :: String }
+    newtype Profile = Profile { user :: AppUser, settings :: Settings }
+
+    derive instance Eq AppUser
+    derive instance Eq Settings
+    derive instance Eq Profile
+
+    instance Ord AppUser where
+      compare (AppUser u1) (AppUser u2) = compare u1.id u2.id
+
+    instance Ord Settings where
+      compare (Settings s1) (Settings s2) = compare s1.theme s2.theme
+
+    instance Ord Profile where
+      compare (Profile p1) (Profile p2) = compare p1.user p2.user
+
+    instance Show Settings where
+      show (Settings { theme }) = "(Settings " <> show theme <> " )"
+
+    instance Show AppUser where
+      show (AppUser { id, name }) = "(AppUser " <> show id <> " " <> show name <> ")"
+
+    instance Show Profile where
+      show (Profile { user, settings}) = "(Profile " <> show user <> " " <> show settings <> ")"
+
+    profile1 = Profile { user: AppUser { id: 2, name: "Bob" }, settings: Settings { theme: "dark" } }
+    profile2 = Profile { user: AppUser { id: 1, name: "Alice" }, settings: Settings { theme: "light" } }
+
+    compare profile1 profile2
+
+    profile1 < profile2
+
+
     ```
     
-    Expected output:
-    
+    Expected Output:
     ```
-    LT
-    true
+    GT
+
+    false
+
     ```
     
 3. **Sort an Array**:
     
     ```purescript
-    import Prelude
-    import Data.Array
-    import Effect.Console
-    newtype UniqueAppUser = UniqueAppUser { id :: Int, name :: String }
-    derive instance Eq UniqueAppUser
-    instance Show UniqueAppUser where
-      show (UniqueAppUser { id, name }) = "(UniqueAppUser " <> show id <> " " <> show name <> ")"
-    instance Ord UniqueAppUser where
-      compare (UniqueAppUser u1) (UniqueAppUser u2) = compare u1.id u2.id
-    logShow $ sort [UniqueAppUser { id: 2, name: "Bob" }, UniqueAppUser { id: 1, name: "Alice" }]
+    logShow $ sort [profile1, profile2]
     ```
     
     Expected output:
     
     ```
-    [(UniqueAppUser 1 "Alice"), (UniqueAppUser 2 "Bob")]
+    [(Profile (AppUser 1 "Alice") (Settings "light")), (Profile (AppUser 2 "Bob") (Settings "dark"))]
     unit
     ```
     

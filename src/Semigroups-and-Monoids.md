@@ -59,6 +59,11 @@ class Semigroup m <= Monoid m where
 Strings and arrays have instances, but you can define for custom types like `Profile` with nested `Address`. To demonstrate associativity, let's define a `Profile` type with deep merging for the nested `address` fields:
 
 ```purescript
+import Prelude
+import Effect.Console
+import Data.Maybe
+import Control.Alt ((<|>))
+
 newtype Address = Address { street :: Maybe String, city :: Maybe String, zip :: Maybe String }
 
 instance Semigroup Address where
@@ -79,7 +84,7 @@ newtype Profile = Profile { name :: Maybe String, address :: Address }
 instance Semigroup Profile where
   append (Profile p1) (Profile p2) = Profile {
     name: p1.name <|> p2.name,
-    address: p1.address <> p2.address  // Deep merge for address
+    address: p1.address <> p2.address
   }
 
 instance Monoid Profile where
@@ -87,19 +92,18 @@ instance Monoid Profile where
 
 instance Show Profile where
   show (Profile p) = "(Profile " <> show p <> ")"
+
+a = Profile { name: Just "Alice", address: Address { street: Just "123 Main St", city: Nothing, zip: Nothing } }
+b = Profile { name: Just "Bob", address: Address { street: Nothing, city: Just "New York", zip: Nothing } }
+c = Profile { name: Just "Charlie", address: Address { street: Nothing, city: Nothing, zip: Just "10001" } }
+
+logShow $ (a <> b) <> c
+logShow $ a <> (b <> c)
+
 ```
 
-In PSCi:
-
-```purescript
-> import Prelude
-> import Effect.Console
-> import Data.Maybe
-> import Control.Alt ((<|>))
-> let a = Profile { name: Just "Alice", address: Address { street: Just "123 Main St", city: Nothing, zip: Nothing } }
-> let b = Profile { name: Just "Bob", address: Address { street: Nothing, city: Just "New York", zip: Nothing } }
-> let c = Profile { name: Just "Charlie", address: Address { street: Nothing, city: Nothing, zip: Just "10001" } }
-> logShow $ (a <> b) <> c
+Expected output:
+```
 (Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })
 unit
 > logShow $ a <> (b <> c)
