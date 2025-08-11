@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>How To Use This Booklet - PureScript For JavaScript Developers</title>
+        <title>Introduction - PureScript For JavaScript Developers</title>
 
 
         <!-- Custom HTML head -->
@@ -175,52 +175,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="how-to-use-this-booklet"><a class="header" href="#how-to-use-this-booklet">How To Use This Booklet</a></h1>
-<p><strong>PureScript for JavaScript Developers</strong> is a supplementary guide designed for JavaScript developers transitioning to PureScript, focusing on selected type class concepts from Chapters 6–8 of <em>PureScript by Example</em>. These chapters introduce type classes, a powerful feature that can feel abstract to those used to JavaScript’s dynamic, informal patterns. This booklet serves as a companion to those chapters, offering a JavaScript-centric perspective to make PureScript’s type classes intuitive by connecting them to familiar JavaScript practices.</p>
-<h3 id="purpose-and-approach"><a class="header" href="#purpose-and-approach">Purpose and Approach</a></h3>
-<p>As a JavaScript developer, you likely use patterns like string conversion, equality checks, combining data, mapping arrays, or validating collections, often with ad hoc solutions like <code>toString</code>, <code>===</code>, or <code>Array.prototype.map</code>. These approaches are flexible but prone to runtime errors and lack structure. PureScript’s type classes formalize these patterns with type safety, ensuring reliability without introducing complexity beyond what you encounter in modern web development. This booklet achieves this by:</p>
-<ol>
-<li><strong>Starting with JavaScript Patterns</strong>: Each section begins with a familiar JavaScript pattern, such as converting objects to strings, comparing values, concatenating arrays, or validating form inputs, to ground the discussion in what you already know.</li>
-<li><strong>Formalizing with PureScript’s Type Classes</strong>: We show how PureScript’s type classes (e.g., <code>Show</code>, <code>Eq</code>, <code>Ord</code>, <code>Semigroup</code>, <code>Monoid</code>, <code>Functor</code>, <code>Foldable</code>, <code>Applicative</code>, <code>Traversable</code>,  <code>Monad</code>) provide structured, type-safe versions of these patterns, solving JavaScript’s pain points like unpredictable behavior or error-prone code.</li>
-<li><strong>Highlighting Familiarity and Simplicity</strong>: We emphasize that these type classes mirror informal JavaScript practices, formalizing them without exceeding the complexity of modern web development, making PureScript accessible and practical.</li>
-</ol>
-<h3 id="who-this-is-for"><a class="header" href="#who-this-is-for">Who This Is For</a></h3>
-<p>This booklet is for JavaScript developers who are:</p>
-<ul>
-<li>Learning PureScript and finding the type class concepts in Chapters 6–8 of <em>PureScript by Example</em> abstract or hard to relate to.</li>
-<li>Comfortable with JavaScript (ES5 or later, including modern frameworks like React or Node.js) but new to strongly-typed functional programming.</li>
-<li>Curious about how PureScript’s type system can enhance familiar JavaScript patterns with safety and clarity.</li>
-</ul>
-<h3 id="how-to-read-this-booklet"><a class="header" href="#how-to-read-this-booklet">How to Read This Booklet</a></h3>
-<ul>
-<li><strong>As a Supplement</strong>: Use this booklet alongside <em>PureScript by Example</em>. Each section covers selected type classes from Chapters 6 (Type Classes), 7 (Applicative Functors, Traversable Functors), 8 (Monads, though limited to concepts with clear JavaScript analogs), and 9 (more advanced type classes, selectively covered). Read these sections first to build intuition, then complete the corresponding exercises in <em>PureScript by Example</em> for hands-on practice. <strong>Note</strong>: Some concepts within <em>PureScript By Example</em> do not have a strong JavaScript analog; they are excluded but should still be read by the reader of the booklet.</li>
-<li><strong>With Code Examples</strong>: Each section includes JavaScript and PureScript code snippets to illustrate parallels and differences. Experiment with the PureScript examples in the REPL (e.g., using <code>spago repl</code>) to reinforce your understanding.</li>
-</ul>
-<h3 id="what-youll-learn"><a class="header" href="#what-youll-learn">What You’ll Learn</a></h3>
-<p>By the end of this booklet, you’ll:</p>
-<ul>
-<li>Understand how PureScript’s type classes like <code>Show</code>, <code>Eq</code>, <code>Ord</code>, <code>Semigroup</code>, <code>Monoid</code>, <code>Functor</code>, <code>Foldable</code>, <code>Applicative</code>, <code>Traversable</code>, and <code>Monad</code> relate to JavaScript patterns such as string conversion, equality checks, data combination, array mapping, and collection validation.</li>
-<li>See how these type classes formalize JavaScript’s informal practices, providing type-safe, reusable solutions that align with modern web development’s complexity.</li>
-<li>Gain confidence in writing PureScript code that leverages type classes to create robust, maintainable programs, enhancing your JavaScript workflows.</li>
-</ul>
-<h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
-<p>To get the most out of this booklet, you should:</p>
-<ul>
-<li>Have a working knowledge of JavaScript (e.g., functions, objects, arrays, and common APIs like <code>map</code> or <code>reduce</code>).</li>
-<li>Understand the basics of PureScript, such as types, data declarations, and function syntax (covered in Chapters 1–5 of <em>PureScript by Example</em>).</li>
-<li>Have a PureScript development environment set up (e.g., via <code>spago</code> and <code>purs</code>) to run examples.</li>
-</ul>
-<p>Let’s dive in and explore how PureScript’s type classes bring structure and safety to the JavaScript patterns you already use, making your code more reliable without overwhelming complexity!</p>
+                        <h1 id="purescript-for-javascript-developers-a-supplementary-guide"><a class="header" href="#purescript-for-javascript-developers-a-supplementary-guide">PureScript For JavaScript Developers: A Supplementary Guide</a></h1>
+<p>Unlock PureScript’s type classes with PureScript Type Classes for JavaScript Developers, a concise guide that bridges JavaScript patterns to PureScript’s powerful type system. Designed as a companion to PureScript by Example (chapters 6–8), this booklet makes type classes intuitive through JavaScript-inspired explanations and hands-on examples.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="Introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
 
-                            <a rel="next prefetch" href="Type_Classes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="how_to_use_this_booklet.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -230,11 +193,8 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="Introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
 
-                    <a rel="next prefetch" href="Type_Classes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="how_to_use_this_booklet.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
