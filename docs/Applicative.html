@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -7,10 +7,10 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -24,25 +24,41 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
     </head>
     <body>
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -56,55 +72,68 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html" class="active"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -121,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -150,19 +184,19 @@
   }
   return null;
 }
-console.log(createUser(&quot;Phillip&quot;, &quot;Freeman&quot;, &quot;phil@example.com&quot;)); // { first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; }
-console.log(createUser(&quot;Phillip&quot;, null, &quot;phil@example.com&quot;)); // null
+console.log(createUser("Phillip", "Freeman", "phil@example.com")); // { first: "Phillip", last: "Freeman", email: "phil@example.com" }
+console.log(createUser("Phillip", null, "phil@example.com")); // null
 </code></pre>
 <p>This is straightforward but limited. To provide better feedback, you might validate each input and return a result with either the user object or errors, wrapping the result in a context:</p>
 <pre><code class="language-javascript">function validateInput(value, field) {
   if (!value) return { valid: false, errors: [`${field} is required`] };
-  if (field === &quot;email&quot; &amp;&amp; !value.includes(&quot;@&quot;)) return { valid: false, errors: [&quot;Valid email is required&quot;] };
+  if (field === "email" &amp;&amp; !value.includes("@")) return { valid: false, errors: ["Valid email is required"] };
   return { valid: true, value };
 }
 function createUserValidated(first, last, email) {
-  const firstResult = validateInput(first, &quot;First name&quot;);
-  const lastResult = validateInput(last, &quot;Last name&quot;);
-  const emailResult = validateInput(email, &quot;Email&quot;);
+  const firstResult = validateInput(first, "First name");
+  const lastResult = validateInput(last, "Last name");
+  const emailResult = validateInput(email, "Email");
   if (firstResult.valid &amp;&amp; lastResult.valid &amp;&amp; emailResult.valid) {
     return { valid: true, value: { first: firstResult.value, last: lastResult.value, email: emailResult.value } };
   }
@@ -172,10 +206,10 @@ function createUserValidated(first, last, email) {
   if (!emailResult.valid) errors.push(...emailResult.errors);
   return { valid: false, errors };
 }
-console.log(createUserValidated(&quot;Phillip&quot;, &quot;Freeman&quot;, &quot;phil@example.com&quot;)); 
-// { valid: true, value: { first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; } }
-console.log(createUserValidated(&quot;Phillip&quot;, null, &quot;invalid&quot;)); 
-// { valid: false, errors: [&quot;Last name is required&quot;, &quot;Valid email is required&quot;] }
+console.log(createUserValidated("Phillip", "Freeman", "phil@example.com")); 
+// { valid: true, value: { first: "Phillip", last: "Freeman", email: "phil@example.com" } }
+console.log(createUserValidated("Phillip", null, "invalid")); 
+// { valid: false, errors: ["Last name is required", "Valid email is required"] }
 </code></pre>
 <p>This improved version applies <code>createUser</code> to validated inputs within a context (<code>{ valid, value }</code> or <code>{ errors }</code>), but it’s repetitive. You manually check each result, combine errors, and ensure types match. Extending this to other structures (e.g., arrays or async data) requires more custom code, and there’s no type safety to catch errors early, risking runtime issues if inputs are unexpected types.</p>
 <h3 id="purescripts-applicative-structured-function-application"><a class="header" href="#purescripts-applicative-structured-function-application">PureScript’s <code>Applicative</code>: Structured Function Application</a></h3>
@@ -198,11 +232,11 @@ console.log(createUserValidated(&quot;Phillip&quot;, null, &quot;invalid&quot;))
 import Effect.Console
 import Data.Maybe
 createUser first last email = { first, last, email }
-logShow $ pure createUser &lt;*&gt; Just &quot;Phillip&quot; &lt;*&gt; Just &quot;Freeman&quot; &lt;*&gt; Just &quot;phil@example.com&quot; 
-logShow $ pure createUser &lt;*&gt; Just &quot;Phillip&quot; &lt;*&gt; (Nothing :: Maybe String) &lt;*&gt; Just &quot;phil@example.com&quot; 
+logShow $ pure createUser &lt;*&gt; Just "Phillip" &lt;*&gt; Just "Freeman" &lt;*&gt; Just "phil@example.com" 
+logShow $ pure createUser &lt;*&gt; Just "Phillip" &lt;*&gt; (Nothing :: Maybe String) &lt;*&gt; Just "phil@example.com" 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just { first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; })
+<pre><code>(Just { first: "Phillip", last: "Freeman", email: "phil@example.com" })
 unit
 Nothing
 unit
@@ -213,10 +247,10 @@ unit
 import Effect.Console
 import Data.Array
 createUser first last email = { first, last, email }
-logShow $ pure createUser &lt;*&gt; [&quot;Phillip&quot;, &quot;Phil&quot;] &lt;*&gt; [&quot;Freeman&quot;, &quot;Smith&quot;] &lt;*&gt; [&quot;phil@example.com&quot;, &quot;psmith@example.com&quot;] 
+logShow $ pure createUser &lt;*&gt; ["Phillip", "Phil"] &lt;*&gt; ["Freeman", "Smith"] &lt;*&gt; ["phil@example.com", "psmith@example.com"] 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>[{ first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Smith&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Smith&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Freeman&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Smith&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Smith&quot;, email: &quot;psmith@example.com&quot; }]
+<pre><code>[{ first: "Phillip", last: "Freeman", email: "phil@example.com" },{ first: "Phillip", last: "Freeman", email: "psmith@example.com" },{ first: "Phillip", last: "Smith", email: "phil@example.com" },{ first: "Phillip", last: "Smith", email: "psmith@example.com" },{ first: "Phil", last: "Freeman", email: "phil@example.com" },{ first: "Phil", last: "Freeman", email: "psmith@example.com" },{ first: "Phil", last: "Smith", email: "phil@example.com" },{ first: "Phil", last: "Smith", email: "psmith@example.com" }]
 unit
 </code></pre>
 <p>The compiler ensures <code>Applicative</code> instances exist and types match, catching errors at compile time. Applicative laws (identity, composition, homomorphism) ensure predictable behavior, unlike JavaScript’s manual checks.</p>
@@ -242,11 +276,11 @@ unit
 import Effect.Console
 import Data.Maybe
 createUser first last email = { first, last, email }
-logShow $ pure createUser &lt;*&gt; Just &quot;Phillip&quot; &lt;*&gt; Just &quot;Freeman&quot; &lt;*&gt; Just &quot;phil@example.com&quot;
-logShow $ pure createUser &lt;*&gt; Just &quot;Phillip&quot; &lt;*&gt; (Nothing :: Maybe String) &lt;*&gt; Just &quot;phil@example.com&quot; 
+logShow $ pure createUser &lt;*&gt; Just "Phillip" &lt;*&gt; Just "Freeman" &lt;*&gt; Just "phil@example.com"
+logShow $ pure createUser &lt;*&gt; Just "Phillip" &lt;*&gt; (Nothing :: Maybe String) &lt;*&gt; Just "phil@example.com" 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just { first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; })
+<pre><code>(Just { first: "Phillip", last: "Freeman", email: "phil@example.com" })
 unit
 Nothing
 unit
@@ -258,10 +292,10 @@ unit
 import Effect.Console
 import Data.Array
 createUser first last email = { first, last, email }
-logShow $ pure createUser &lt;*&gt; [&quot;Phillip&quot;, &quot;Phil&quot;] &lt;*&gt; [&quot;Freeman&quot;, &quot;Smith&quot;] &lt;*&gt; [&quot;phil@example.com&quot;, &quot;psmith@example.com&quot;]
+logShow $ pure createUser &lt;*&gt; ["Phillip", "Phil"] &lt;*&gt; ["Freeman", "Smith"] &lt;*&gt; ["phil@example.com", "psmith@example.com"]
 </code></pre>
 <p>Expected output:</p>
-<pre><code>[{ first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Smith&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Smith&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Freeman&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Smith&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Smith&quot;, email: &quot;psmith@example.com&quot; }]
+<pre><code>[{ first: "Phillip", last: "Freeman", email: "phil@example.com" },{ first: "Phillip", last: "Freeman", email: "psmith@example.com" },{ first: "Phillip", last: "Smith", email: "phil@example.com" },{ first: "Phillip", last: "Smith", email: "psmith@example.com" },{ first: "Phil", last: "Freeman", email: "phil@example.com" },{ first: "Phil", last: "Freeman", email: "psmith@example.com" },{ first: "Phil", last: "Smith", email: "phil@example.com" },{ first: "Phil", last: "Smith", email: "psmith@example.com" }]
 unit
 </code></pre>
 </li>
@@ -271,7 +305,7 @@ unit
  import Effect.Console
  newtype Point a = Point { x :: a, y :: a }
  instance Show a =&gt; Show (Point a) where
-   show (Point p) = &quot;(Point &quot; &lt;&gt; show p.x &lt;&gt; &quot; &quot; &lt;&gt; show p.y &lt;&gt; &quot;)&quot;
+   show (Point p) = "(Point " &lt;&gt; show p.x &lt;&gt; " " &lt;&gt; show p.y &lt;&gt; ")"
  instance Functor Point where
    map f (Point p) = Point { x: f p.x, y: f p.y }
  instance Apply Point where
@@ -304,7 +338,7 @@ unit
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="Traversable_functor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="Traversable_functor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -318,29 +352,13 @@ unit
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="Traversable_functor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="Traversable_functor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -360,5 +378,7 @@ unit
         <!-- Custom JS scripts -->
 
 
+
+    </div>
     </body>
 </html>

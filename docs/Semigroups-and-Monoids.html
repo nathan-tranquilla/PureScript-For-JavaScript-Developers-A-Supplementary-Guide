@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -7,10 +7,10 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -24,25 +24,41 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
     </head>
     <body>
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -56,55 +72,68 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html" class="active"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -121,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -144,33 +178,33 @@
                         <h2 id="semigroups-and-monoids"><a class="header" href="#semigroups-and-monoids">Semigroups and Monoids</a></h2>
 <h3 id="the-javascript-struggle-combining-values"><a class="header" href="#the-javascript-struggle-combining-values">The JavaScript Struggle: Combining Values</a></h3>
 <p>In JavaScript, combining values like strings or arrays is common, using <code>+</code> for strings or <code>concat</code> for arrays:</p>
-<pre><code class="language-javascript">console.log(&quot;Hello&quot; + &quot; &quot; + &quot;World&quot;); // &quot;Hello World&quot;
+<pre><code class="language-javascript">console.log("Hello" + " " + "World"); // "Hello World"
 console.log([1, 2, 3].concat([4, 5]); // [1, 2, 3, 4, 5]
 </code></pre>
 <p>But for custom types, like merging user settings objects, there's no standard way:</p>
-<pre><code class="language-javascript">const settings1 = { theme: &quot;dark&quot;, notifications: true };
-const settings2 = { theme: &quot;light&quot;, alerts: true };
-const merged = { ...settings1, ...settings2 }; // { theme: &quot;light&quot;, notifications: true, alerts: true }
+<pre><code class="language-javascript">const settings1 = { theme: "dark", notifications: true };
+const settings2 = { theme: "light", alerts: true };
+const merged = { ...settings1, ...settings2 }; // { theme: "light", notifications: true, alerts: true }
 console.log(merged);
 </code></pre>
 <p>This works but is ad hoc. You must define custom merge functions for each type, and there's no guarantee of associativity (e.g., <code>(a + b) + c == a + (b + c)</code>). Associativity means the order of grouping combinations doesn't matter, which is crucial for predictable behavior in larger operations like folding arrays. For example, consider merging user profiles with nested <code>address</code> objects:</p>
-<pre><code class="language-javascript">const profileA = { name: &quot;Alice&quot;, address: { street: &quot;123 Main St&quot;, city: undefined, zip: undefined } };
-const profileB = { name: &quot;Bob&quot;, address: { street: undefined, city: &quot;New York&quot;, zip: undefined } };
-const profileC = { name: &quot;Charlie&quot;, address: { street: undefined, city: undefined, zip: &quot;10001&quot; } };
+<pre><code class="language-javascript">const profileA = { name: "Alice", address: { street: "123 Main St", city: undefined, zip: undefined } };
+const profileB = { name: "Bob", address: { street: undefined, city: "New York", zip: undefined } };
+const profileC = { name: "Charlie", address: { street: undefined, city: undefined, zip: "10001" } };
 
 // Merging A and B first, then with C
 const result1 = { ...{ ...profileA, ...profileB }, ...profileC };
-// Result: { name: &quot;Charlie&quot;, address: { street: undefined, city: undefined, zip: &quot;10001&quot; } } – street and city are lost
+// Result: { name: "Charlie", address: { street: undefined, city: undefined, zip: "10001" } } – street and city are lost
 
 // Merging B and C first, then with A
 const result2 = { ...{ ...profileB, ...profileC }, ...profileA };
-// Result: { name: &quot;Alice&quot;, address: { street: &quot;123 Main St&quot;, city: undefined, zip: undefined } } – city and zip are lost
+// Result: { name: "Alice", address: { street: "123 Main St", city: undefined, zip: undefined } } – city and zip are lost
 </code></pre>
-<p>The grouping affects which nested <code>address</code> properties survive, breaking associativity—the results aren't the same. This can lead to subtle bugs in larger merges or folds, where the order of operations unexpectedly changes the result. For empty values (like empty object <code>{}</code>), it's often clear what the &quot;identity&quot; is for simple spreads (it combines with any object to return the object unchanged), but for custom merges like this, <code>{}</code> might not be an identity if merging adds logic.</p>
+<p>The grouping affects which nested <code>address</code> properties survive, breaking associativity—the results aren't the same. This can lead to subtle bugs in larger merges or folds, where the order of operations unexpectedly changes the result. For empty values (like empty object <code>{}</code>), it's often clear what the "identity" is for simple spreads (it combines with any object to return the object unchanged), but for custom merges like this, <code>{}</code> might not be an identity if merging adds logic.</p>
 <p>For more complex combinations, like folding an array of objects, you need custom reduce functions:</p>
 <pre><code class="language-javascript">const allProfiles = [profileA, profileB, profileC];
 const mergedAll = allProfiles.reduce((acc, p) =&gt; ({ ...acc, ...p }), {});
-console.log(mergedAll); // { name: &quot;Charlie&quot;, address: { street: undefined, city: undefined, zip: &quot;10001&quot; } } – depends on order, nested fields overwritten
+console.log(mergedAll); // { name: "Charlie", address: { street: undefined, city: undefined, zip: "10001" } } – depends on order, nested fields overwritten
 </code></pre>
 <p>This is flexible but error-prone, with no type safety for the combination operation or empty value.</p>
 <h3 id="purescripts-semigroup-and-monoid-type-safe-combining"><a class="header" href="#purescripts-semigroup-and-monoid-type-safe-combining">PureScript’s <code>Semigroup</code> and <code>Monoid</code>: Type-Safe Combining</a></h3>
@@ -195,7 +229,7 @@ instance Monoid Address where
   mempty = Address { street: Nothing, city: Nothing, zip: Nothing }
 
 instance Show Address where
-  show (Address a) = &quot;(Address &quot; &lt;&gt; show a &lt;&gt; &quot;)&quot;
+  show (Address a) = "(Address " &lt;&gt; show a &lt;&gt; ")"
 
 newtype Profile = Profile { name :: Maybe String, address :: Address }
 
@@ -209,21 +243,21 @@ instance Monoid Profile where
   mempty = Profile { name: Nothing, address: mempty }
 
 instance Show Profile where
-  show (Profile p) = &quot;(Profile &quot; &lt;&gt; show p &lt;&gt; &quot;)&quot;
+  show (Profile p) = "(Profile " &lt;&gt; show p &lt;&gt; ")"
 </code></pre>
 <p>In PSCi:</p>
 <pre><code class="language-purescript">&gt; import Prelude
 &gt; import Effect.Console
 &gt; import Data.Maybe
 &gt; import Control.Alt ((&lt;|&gt;))
-&gt; let a = Profile { name: Just &quot;Alice&quot;, address: Address { street: Just &quot;123 Main St&quot;, city: Nothing, zip: Nothing } }
-&gt; let b = Profile { name: Just &quot;Bob&quot;, address: Address { street: Nothing, city: Just &quot;New York&quot;, zip: Nothing } }
-&gt; let c = Profile { name: Just &quot;Charlie&quot;, address: Address { street: Nothing, city: Nothing, zip: Just &quot;10001&quot; } }
+&gt; let a = Profile { name: Just "Alice", address: Address { street: Just "123 Main St", city: Nothing, zip: Nothing } }
+&gt; let b = Profile { name: Just "Bob", address: Address { street: Nothing, city: Just "New York", zip: Nothing } }
+&gt; let c = Profile { name: Just "Charlie", address: Address { street: Nothing, city: Nothing, zip: Just "10001" } }
 &gt; logShow $ (a &lt;&gt; b) &lt;&gt; c
-(Profile { name: (Just &quot;Alice&quot;), address: (Address { street: (Just &quot;123 Main St&quot;), city: (Just &quot;New York&quot;), zip: (Just &quot;10001&quot;) }) })
+(Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })
 unit
 &gt; logShow $ a &lt;&gt; (b &lt;&gt; c)
-(Profile { name: (Just &quot;Alice&quot;), address: (Address { street: (Just &quot;123 Main St&quot;), city: (Just &quot;New York&quot;), zip: (Just &quot;10001&quot;) }) })
+(Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })
 unit
 </code></pre>
 <p>The results are the same regardless of grouping, adhering to the associativity law. This encourages designs where combinations are predictable and deep merging is explicit, avoiding the pitfalls in JavaScript's custom merges. The compiler ensures all types used with <code>&lt;&gt;</code> have a <code>Semigroup</code> instance, and the laws (associativity, identity) are enforced by convention.</p>
@@ -251,11 +285,11 @@ unit
 <p><strong>Combine Strings and Arrays</strong>:</p>
 <pre><code class="language-purescript">import Prelude
 import Effect.Console
-logShow $ &quot;Hello&quot; &lt;&gt; &quot; &quot; &lt;&gt; &quot;World&quot;
+logShow $ "Hello" &lt;&gt; " " &lt;&gt; "World"
 logShow $ [1, 2, 3] &lt;&gt; [4, 5]
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;Hello World&quot;
+<pre><code>"Hello World"
 unit
 [1,2,3,4,5]
 unit
@@ -266,11 +300,11 @@ unit
 <pre><code class="language-purescript">import Prelude
 import Effect.Console
 import Data.Monoid
-logShow $ mempty &lt;&gt; &quot;Hello&quot; &lt;&gt; mempty
+logShow $ mempty &lt;&gt; "Hello" &lt;&gt; mempty
 logShow $ mempty &lt;&gt; [1, 2] &lt;&gt; mempty
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;Hello&quot;
+<pre><code>"Hello"
 unit
 [1,2]
 unit
@@ -293,7 +327,7 @@ instance Semigroup Address where
 instance Monoid Address where
   mempty = Address { street: Nothing, city: Nothing, zip: Nothing }
 instance Show Address where
-  show (Address a) = &quot;(Address &quot; &lt;&gt; show a &lt;&gt; &quot;)&quot;
+  show (Address a) = "(Address " &lt;&gt; show a &lt;&gt; ")"
 newtype Profile = Profile { name :: Maybe String, address :: Address }
 instance Semigroup Profile where
   append (Profile p1) (Profile p2) = Profile {
@@ -303,11 +337,11 @@ instance Semigroup Profile where
 instance Monoid Profile where
   mempty = Profile { name: Nothing, address: mempty }
 instance Show Profile where
-  show (Profile p) = &quot;(Profile &quot; &lt;&gt; show p &lt;&gt; &quot;)&quot;
-logShow $ Profile { name: Just &quot;Alice&quot;, address: Address { street: Just &quot;123 Main St&quot;, city: Nothing, zip: Nothing } } &lt;&gt; Profile { name: Nothing, address: Address { street: Nothing, city: Just &quot;New York&quot;, zip: Just &quot;10001&quot; } }
+  show (Profile p) = "(Profile " &lt;&gt; show p &lt;&gt; ")"
+logShow $ Profile { name: Just "Alice", address: Address { street: Just "123 Main St", city: Nothing, zip: Nothing } } &lt;&gt; Profile { name: Nothing, address: Address { street: Nothing, city: Just "New York", zip: Just "10001" } }
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Profile { name: (Just &quot;Alice&quot;), address: (Address { street: (Just &quot;123 Main St&quot;), city: (Just &quot;New York&quot;), zip: (Just &quot;10001&quot;) }) })
+<pre><code>(Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })
 unit
 </code></pre>
 </li>
@@ -323,7 +357,7 @@ unit
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="Foldable.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="Foldable.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -337,29 +371,13 @@ unit
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="Foldable.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="Foldable.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -379,5 +397,7 @@ unit
         <!-- Custom JS scripts -->
 
 
+
+    </div>
     </body>
 </html>

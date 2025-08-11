@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -7,10 +7,10 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -24,25 +24,41 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
     </head>
     <body>
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -56,55 +72,68 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html" class="active"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -121,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -151,18 +185,18 @@ function fetchProfile(profileId) {
   return Promise.resolve({ profileId, addressId: `address-${profileId}` });
 }
 function fetchCity(addressId) {
-  return Promise.resolve({ addressId, city: &quot;Faketown&quot; });
+  return Promise.resolve({ addressId, city: "Faketown" });
 }
 fetchUser(123)
   .then(user =&gt; fetchProfile(user.profileId))
   .then(profile =&gt; fetchCity(profile.addressId))
   .then(address =&gt; ({ city: address.city }))
-  .then(console.log); // { city: &quot;Faketown&quot; }
+  .then(console.log); // { city: "Faketown" }
 fetchUser(null)
   .then(user =&gt; fetchProfile(user.profileId))
   .then(profile =&gt; fetchCity(profile.addressId))
   .then(address =&gt; ({ city: address.city }))
-  .catch(error =&gt; console.log({ error: error.message })); // { error: &quot;Cannot read properties of null&quot; }
+  .catch(error =&gt; console.log({ error: error.message })); // { error: "Cannot read properties of null" }
 </code></pre>
 <p>This pattern—chaining operations where each step depends on the previous result—is common in JavaScript for handling async tasks like API calls or database queries. You use <code>.then</code> to sequence the operations, passing the result of one to the next. However, it’s error-prone: if any step fails (e.g., <code>user</code> is <code>null</code>), you get runtime errors, and you need <code>.catch</code> to handle failures. Extending this to other contexts (like optional values or arrays) requires custom code, and there’s no type safety to ensure each step’s output matches the next step’s input.</p>
 <h3 id="purescripts-monad-structured-sequential-computations"><a class="header" href="#purescripts-monad-structured-sequential-computations">PureScript’s <code>Monad</code>: Structured Sequential Computations</a></h3>
@@ -194,15 +228,15 @@ userCity userId users profiles addresses = do
   address &lt;- lookupCity profile.addressId addresses {- - Look up address by addressId -}
   pure address.city {- - Return the city -}
 
-users = Map.fromFoldable [ Tuple &quot;user123&quot; { userId: &quot;user123&quot;, profileId: &quot;profile-123&quot; } ]
-profiles = Map.fromFoldable [ Tuple &quot;profile-123&quot; { profileId: &quot;profile-123&quot;, addressId: &quot;address-123&quot; } ]
-addresses = Map.fromFoldable [ Tuple &quot;address-123&quot; { addressId: &quot;address-123&quot;, city: &quot;Faketown&quot; } ]
+users = Map.fromFoldable [ Tuple "user123" { userId: "user123", profileId: "profile-123" } ]
+profiles = Map.fromFoldable [ Tuple "profile-123" { profileId: "profile-123", addressId: "address-123" } ]
+addresses = Map.fromFoldable [ Tuple "address-123" { addressId: "address-123", city: "Faketown" } ]
 
-logShow $ userCity &quot;user123&quot; users profiles addresses 
-logShow $ userCity &quot;wrong&quot; users profiles addresses 
+logShow $ userCity "user123" users profiles addresses 
+logShow $ userCity "wrong" users profiles addresses 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just &quot;Faketown&quot;)
+<pre><code>(Just "Faketown")
 unit
 Nothing
 unit
@@ -258,15 +292,15 @@ userCity userId users profiles addresses = do
   address &lt;- lookupCity profile.addressId addresses {- - Look up address by addressId -}
   pure address.city {- - Return the city -}
 
-users = Map.fromFoldable [ Tuple &quot;user123&quot; { userId: &quot;user123&quot;, profileId: &quot;profile-123&quot; } ]
-profiles = Map.fromFoldable [ Tuple &quot;profile-123&quot; { profileId: &quot;profile-123&quot;, addressId: &quot;address-123&quot; } ]
-addresses = Map.fromFoldable [ Tuple &quot;address-123&quot; { addressId: &quot;address-123&quot;, city: &quot;Faketown&quot; } ]
+users = Map.fromFoldable [ Tuple "user123" { userId: "user123", profileId: "profile-123" } ]
+profiles = Map.fromFoldable [ Tuple "profile-123" { profileId: "profile-123", addressId: "address-123" } ]
+addresses = Map.fromFoldable [ Tuple "address-123" { addressId: "address-123", city: "Faketown" } ]
 
-logShow $ userCity &quot;user123&quot; users profiles addresses 
-logShow $ userCity &quot;wrong&quot; users profiles addresses 
+logShow $ userCity "user123" users profiles addresses 
+logShow $ userCity "wrong" users profiles addresses 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just &quot;Faketown&quot;)
+<pre><code>(Just "Faketown")
 unit
 Nothing
 unit
@@ -293,15 +327,15 @@ userCity userId users profiles addresses = do
   address &lt;- lookupCity profile.addressId addresses {- - Look up address by addressId -}
   pure address.city {- - Return the city -}
 
-users = Map.fromFoldable [ Tuple &quot;user123&quot; { userId: &quot;user123&quot;, profileId: &quot;profile-123&quot; } ]
-profiles = Map.fromFoldable [ Tuple &quot;profile-123&quot; { profileId: &quot;profile-123&quot;, addressId: &quot;address-123&quot; } ]
-addresses = Map.fromFoldable [ Tuple &quot;address-123&quot; { addressId: &quot;address-123&quot;, city: &quot;Faketown&quot; } ]
+users = Map.fromFoldable [ Tuple "user123" { userId: "user123", profileId: "profile-123" } ]
+profiles = Map.fromFoldable [ Tuple "profile-123" { profileId: "profile-123", addressId: "address-123" } ]
+addresses = Map.fromFoldable [ Tuple "address-123" { addressId: "address-123", city: "Faketown" } ]
 
-logShow $ userCity &quot;user123&quot; users profiles addresses 
-logShow $ userCity &quot;wrong&quot; users profiles addresses 
+logShow $ userCity "user123" users profiles addresses 
+logShow $ userCity "wrong" users profiles addresses 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just &quot;Faketown&quot;)
+<pre><code>(Just "Faketown")
 unit
 Nothing
 unit
@@ -369,7 +403,7 @@ unit
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="What_next.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="What_next.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -383,29 +417,13 @@ unit
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="What_next.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="What_next.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -425,5 +443,7 @@ unit
         <!-- Custom JS scripts -->
 
 
+
+    </div>
     </body>
 </html>

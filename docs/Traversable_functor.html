@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -7,10 +7,10 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -24,25 +24,41 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
     </head>
     <body>
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -56,55 +72,68 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html" class="active"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -121,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -146,17 +180,17 @@
 <p>In JavaScript, you often validate collections of data, like an array of phone numbers, to ensure each element is valid before using it. A common approach is mapping over the array with a validation function and collecting results or errors:</p>
 <pre><code class="language-javascript">function validatePhoneNumber(phone) {
   const regex = /^\d{3}-\d{3}-\d{4}$/;
-  return regex.test(phone) ? { valid: true, value: phone } : { valid: false, errors: [&quot;Invalid phone format&quot;] };
+  return regex.test(phone) ? { valid: true, value: phone } : { valid: false, errors: ["Invalid phone format"] };
 }
 function validatePhones(phones) {
   const results = phones.map(validatePhoneNumber);
   const errors = results.filter(r =&gt; !r.valid).map(r =&gt; r.errors).flat();
   return errors.length ? { valid: false, errors } : { valid: true, value: results.map(r =&gt; r.value) };
 }
-console.log(validatePhones([&quot;555-555-5555&quot;, &quot;555-555-0000&quot;])); 
-// { valid: true, value: [&quot;555-555-5555&quot;, &quot;555-555-0000&quot;] }
-console.log(validatePhones([&quot;555-555-5555&quot;, &quot;invalid&quot;])); 
-// { valid: false, errors: [&quot;Invalid phone format&quot;] }
+console.log(validatePhones(["555-555-5555", "555-555-0000"])); 
+// { valid: true, value: ["555-555-5555", "555-555-0000"] }
+console.log(validatePhones(["555-555-5555", "invalid"])); 
+// { valid: false, errors: ["Invalid phone format"] }
 </code></pre>
 <p><strong>How This Differs from the Applicative Example</strong>: Unlike the Applicative example’s <code>createUserValidated</code>, which validates and combines independent inputs (first name, last name, email) into a single user object, this example iterates over a single array of phone numbers, applying <code>validatePhoneNumber</code> to each element and collecting results or errors while keeping the array structure. The Applicative example lifts a function over multiple validated inputs, whereas this maps a validation function across a collection, preserving its shape. This distinction highlights Traversable’s focus on processing each element in a structure, not combining separate values.</p>
 <p>This pattern—mapping a validation function over an array and collecting results or errors—is common in form validation or data processing. However, it’s repetitive and specific to arrays. If you need to validate other structures (like optional values or nested objects), you write custom code for each. There’s no type safety to ensure the validation function and data match, and runtime errors can occur if inputs are unexpected types, like non-strings in the <code>phones</code> array.</p>
@@ -184,20 +218,20 @@ import Data.String.Regex.Unsafe
 import Data.String.Regex.Flags
 newtype PhoneNumber = PhoneNumber String
 instance Show PhoneNumber where
-  show (PhoneNumber s) = &quot;(PhoneNumber &quot; &lt;&gt; show s &lt;&gt; &quot;)&quot;
-phoneNumberRegex = unsafeRegex &quot;^\\d{3}-\\d{3}-\\d{4}$&quot; noFlags
+  show (PhoneNumber s) = "(PhoneNumber " &lt;&gt; show s &lt;&gt; ")"
+phoneNumberRegex = unsafeRegex "^\\d{3}-\\d{3}-\\d{4}$" noFlags
 validatePhoneNumber s = if test phoneNumberRegex s
   then pure (PhoneNumber s)
-  else invalid (singleton &quot;Invalid phone format&quot;)
-phones = [&quot;555-555-5555&quot;, &quot;555-555-0000&quot;]
+  else invalid (singleton "Invalid phone format")
+phones = ["555-555-5555", "555-555-0000"]
 logShow $ traverse validatePhoneNumber phones {- - Validates each phone number -}
-badPhones = [&quot;555-555-5555&quot;, &quot;invalid&quot;]
+badPhones = ["555-555-5555", "invalid"]
 logShow $ traverse validatePhoneNumber badPhones {- - Collects errors -}
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(valid [(PhoneNumber &quot;555-555-5555&quot;),(PhoneNumber &quot;555-555-0000&quot;)])
+<pre><code>(valid [(PhoneNumber "555-555-5555"),(PhoneNumber "555-555-0000")])
 unit
-(invalid ([&quot;Invalid phone format&quot;]))
+(invalid (["Invalid phone format"]))
 unit
 </code></pre>
 <p>For <code>Maybe</code> (optional values):</p>
@@ -211,20 +245,20 @@ import Data.Validation.Semigroup (V, invalid)
 import Data.NonEmpty (NonEmpty(..), singleton)
 
 nonEmpty field s = 
-  if s == &quot;&quot; 
-    then invalid (NonEmpty (&quot;Field '&quot; &lt;&gt; field &lt;&gt; &quot;' cannot be empty&quot;) Nil)
+  if s == "" 
+    then invalid (NonEmpty ("Field '" &lt;&gt; field &lt;&gt; "' cannot be empty") Nil)
     else pure s
 
-logShow $ traverse (nonEmpty &quot;Example&quot;) Nothing -- No validation for Nothing
-logShow $ traverse (nonEmpty &quot;Example&quot;) (Just &quot;&quot;) -- Validates Just value
-logShow $ traverse (nonEmpty &quot;Example&quot;) (Just &quot;Testing&quot;) -- Successful validation
+logShow $ traverse (nonEmpty "Example") Nothing -- No validation for Nothing
+logShow $ traverse (nonEmpty "Example") (Just "") -- Validates Just value
+logShow $ traverse (nonEmpty "Example") (Just "Testing") -- Successful validation
 </code></pre>
 <p>Expected output:</p>
 <pre><code>(valid Nothing)
 unit
-(invalid ([&quot;Field 'Example' cannot be empty&quot;]))
+(invalid (["Field 'Example' cannot be empty"]))
 unit
-(valid (Just &quot;Testing&quot;))
+(valid (Just "Testing"))
 unit
 </code></pre>
 <p>The compiler ensures <code>Traversable</code> instances exist and types match, catching errors at compile time. Traversable laws ensure the structure is preserved and effects are combined predictably, unlike JavaScript’s ad hoc validation.</p>
@@ -250,16 +284,16 @@ import Data.Traversable (traverse)
 import Data.List.Types (NonEmptyList(..), List(..))
 import Data.Validation.Semigroup (V, invalid)
 import Data.NonEmpty (NonEmpty(..), singleton)
-nonEmpty field s = if s == &quot;&quot;
-  then invalid (NonEmpty (&quot;Field '&quot; &lt;&gt; field &lt;&gt; &quot;' cannot be empty&quot;) Nil)
+nonEmpty field s = if s == ""
+  then invalid (NonEmpty ("Field '" &lt;&gt; field &lt;&gt; "' cannot be empty") Nil)
   else pure s
-logShow $ traverse (nonEmpty &quot;Name&quot;) [&quot;Phillip&quot;, &quot;Freeman&quot;] {- - Validates each name -}
-logShow $ traverse (nonEmpty &quot;Name&quot;) [&quot;Phillip&quot;, &quot;&quot;] {- - Collects errors -}
+logShow $ traverse (nonEmpty "Name") ["Phillip", "Freeman"] {- - Validates each name -}
+logShow $ traverse (nonEmpty "Name") ["Phillip", ""] {- - Collects errors -}
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(valid [&quot;Phillip&quot;,&quot;Freeman&quot;])
+<pre><code>(valid ["Phillip","Freeman"])
 unit
-(invalid ([&quot;Field 'Name' cannot be empty&quot;]))
+(invalid (["Field 'Name' cannot be empty"]))
 unit
 </code></pre>
 <p>This generalizes validation across structures, similar to JavaScript’s array validation but safer and more flexible.</p>
@@ -275,16 +309,16 @@ import Data.Traversable (traverse)
 import Data.List.Types (NonEmptyList(..), List(..))
 import Data.Validation.Semigroup (V, invalid)
 import Data.NonEmpty (NonEmpty(..), singleton)
-nonEmpty field s = if s == &quot;&quot;
-  then invalid (NonEmpty (&quot;Field '&quot; &lt;&gt; field &lt;&gt; &quot;' cannot be empty&quot;) Nil)
+nonEmpty field s = if s == ""
+  then invalid (NonEmpty ("Field '" &lt;&gt; field &lt;&gt; "' cannot be empty") Nil)
   else pure s
-logShow $ traverse (nonEmpty &quot;Name&quot;) [&quot;Phillip&quot;, &quot;Freeman&quot;] {- - Validate names in array -}
-logShow $ traverse (nonEmpty &quot;Name&quot;) [&quot;Phillip&quot;, &quot;&quot;] {- - Collect errors -}
+logShow $ traverse (nonEmpty "Name") ["Phillip", "Freeman"] {- - Validate names in array -}
+logShow $ traverse (nonEmpty "Name") ["Phillip", ""] {- - Collect errors -}
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(valid [&quot;Phillip&quot;,&quot;Freeman&quot;])
+<pre><code>(valid ["Phillip","Freeman"])
 unit
-(invalid ([&quot;Field 'Name' cannot be empty&quot;]))
+(invalid (["Field 'Name' cannot be empty"]))
 unit
 </code></pre>
 </li>
@@ -297,19 +331,19 @@ import Data.Traversable (traverse)
 import Data.List.Types (NonEmptyList(..), List(..))
 import Data.Validation.Semigroup (V, invalid)
 import Data.NonEmpty (NonEmpty(..), singleton)
-nonEmpty field s = if s == &quot;&quot;
-  then invalid (NonEmpty (&quot;Field '&quot; &lt;&gt; field &lt;&gt; &quot;' cannot be empty&quot;) Nil)
+nonEmpty field s = if s == ""
+  then invalid (NonEmpty ("Field '" &lt;&gt; field &lt;&gt; "' cannot be empty") Nil)
   else pure s
-logShow $ traverse (nonEmpty &quot;Example&quot;) Nothing {- - No validation for Nothing -}
-logShow $ traverse (nonEmpty &quot;Example&quot;) (Just &quot;&quot;) {- - Validate Just value -}
-logShow $ traverse (nonEmpty &quot;Example&quot;) (Just &quot;Testing&quot;) {- - Successful validation -}
+logShow $ traverse (nonEmpty "Example") Nothing {- - No validation for Nothing -}
+logShow $ traverse (nonEmpty "Example") (Just "") {- - Validate Just value -}
+logShow $ traverse (nonEmpty "Example") (Just "Testing") {- - Successful validation -}
 </code></pre>
 <p>Expected output:</p>
 <pre><code>(valid Nothing)
 unit
-(invalid ([&quot;Field 'Example' cannot be empty&quot;]))
+(invalid (["Field 'Example' cannot be empty"]))
 unit
-(valid (Just &quot;Testing&quot;))
+(valid (Just "Testing"))
 unit
 </code></pre>
 </li>
@@ -325,7 +359,7 @@ unit
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="Monads.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="Monads.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -339,29 +373,13 @@ unit
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="Monads.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="Monads.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -381,5 +399,7 @@ unit
         <!-- Custom JS scripts -->
 
 
+
+    </div>
     </body>
 </html>

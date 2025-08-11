@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>PureScript For JavaScript Developers</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -25,25 +25,41 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
     </head>
     <body>
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -57,55 +73,68 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="how_to_use_this_booklet.html"><strong aria-hidden="true">1.</strong> How To Use This Booklet</a></li><li class="chapter-item expanded "><a href="Type_Classes.html"><strong aria-hidden="true">2.</strong> Type Classes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Show.html"><strong aria-hidden="true">2.1.</strong> Show</a></li><li class="chapter-item expanded "><a href="Eq.html"><strong aria-hidden="true">2.2.</strong> Eq</a></li><li class="chapter-item expanded "><a href="Ord.html"><strong aria-hidden="true">2.3.</strong> Ord</a></li><li class="chapter-item expanded "><a href="Semigroups-and-Monoids.html"><strong aria-hidden="true">2.4.</strong> Semigroups and Monoids</a></li><li class="chapter-item expanded "><a href="Foldable.html"><strong aria-hidden="true">2.5.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="Functor.html"><strong aria-hidden="true">2.6.</strong> Functor</a></li><li class="chapter-item expanded "><a href="Applicative.html"><strong aria-hidden="true">2.7.</strong> Applicative Functor</a></li><li class="chapter-item expanded "><a href="Traversable_functor.html"><strong aria-hidden="true">2.8.</strong> Traversable Functor</a></li><li class="chapter-item expanded "><a href="Monads.html"><strong aria-hidden="true">2.9.</strong> Monads</a></li></ol></li><li class="chapter-item expanded "><a href="What_next.html"><strong aria-hidden="true">3.</strong> What's Next?</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -122,7 +151,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -143,7 +177,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="purescript-for-javascript-developers-a-supplementary-guide"><a class="header" href="#purescript-for-javascript-developers-a-supplementary-guide">PureScript For JavaScript Developers: A Supplementary Guide</a></h1>
-<p>Unlock PureScript’s type classes with PureScript Type Classes for JavaScript Developers, a concise guide that bridges JavaScript patterns to PureScript’s powerful type system. Designed as a companion to PureScript by Example (chapters 6–8), this booklet makes type classes intuitive through JavaScript-inspired explanations and hands-on examples. </p>
+<p>Unlock PureScript’s type classes with PureScript Type Classes for JavaScript Developers, a concise guide that bridges JavaScript patterns to PureScript’s powerful type system. Designed as a companion to PureScript by Example (chapters 6–8), this booklet makes type classes intuitive through JavaScript-inspired explanations and hands-on examples.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-use-this-booklet"><a class="header" href="#how-to-use-this-booklet">How To Use This Booklet</a></h1>
 <p><strong>PureScript for JavaScript Developers</strong> is a supplementary guide designed for JavaScript developers transitioning to PureScript, focusing on selected type class concepts from Chapters 6–8 of <em>PureScript by Example</em>. These chapters introduce type classes, a powerful feature that can feel abstract to those used to JavaScript’s dynamic, informal patterns. This booklet serves as a companion to those chapters, offering a JavaScript-centric perspective to make PureScript’s type classes intuitive by connecting them to familiar JavaScript practices.</p>
 <h3 id="purpose-and-approach"><a class="header" href="#purpose-and-approach">Purpose and Approach</a></h3>
@@ -186,21 +220,21 @@
 <h3 id="the-javascript-struggle-debugging-complex-objects"><a class="header" href="#the-javascript-struggle-debugging-complex-objects">The JavaScript Struggle: Debugging Complex Objects</a></h3>
 <p>JavaScript developers often debug by logging objects to the console. Suppose you’re working with a user profile object:</p>
 <pre><code class="language-javascript">const userProfile = {
-  name: &quot;Alice&quot;,
-  settings: { theme: &quot;dark&quot;, notifications: true },
-  preferences: [&quot;email&quot;, &quot;sms&quot;]
+  name: "Alice",
+  settings: { theme: "dark", notifications: true },
+  preferences: ["email", "sms"]
 };
 console.log(userProfile); 
-// { name: &quot;Alice&quot;, settings: { theme: &quot;dark&quot;, notifications: true }, preferences: [&quot;email&quot;, &quot;sms&quot;] }
+// { name: "Alice", settings: { theme: "dark", notifications: true }, preferences: ["email", "sms"] }
 console.log(userProfile.toString()); 
-// &quot;[object Object]&quot;
+// "[object Object]"
 console.log(JSON.stringify(userProfile)); 
-// &quot;{\&quot;name\&quot;:\&quot;Alice\&quot;,\&quot;settings\&quot;:{\&quot;theme\&quot;:\&quot;dark\&quot;,\&quot;notifications\&quot;:true},\&quot;preferences\&quot;:[\&quot;email\&quot;,\&quot;sms\&quot;]}&quot;
+// "{\"name\":\"Alice\",\"settings\":{\"theme\":\"dark\",\"notifications\":true},\"preferences\":[\"email\",\"sms\"]}"
 </code></pre>
 <p>The default <code>console.log</code> is verbose, <code>toString</code> is useless, and <code>JSON.stringify</code> is better but clunky with quotes and braces. If <code>settings</code> lacks a custom <code>toString</code> or <code>toJSON</code>, or if you add a non-serializable property like a function, things break:</p>
-<pre><code class="language-javascript">userProfile.callback = () =&gt; console.log(&quot;hi&quot;);
+<pre><code class="language-javascript">userProfile.callback = () =&gt; console.log("hi");
 console.log(JSON.stringify(userProfile)); 
-// Omits `callback`: &quot;{\&quot;name\&quot;:\&quot;Alice\&quot;,\&quot;settings\&quot;:{\&quot;theme\&quot;:\&quot;dark\&quot;,\&quot;notifications\&quot;:true},\&quot;preferences\&quot;:[\&quot;email\&quot;,\&quot;sms\&quot;]}&quot;
+// Omits `callback`: "{\"name\":\"Alice\",\"settings\":{\"theme\":\"dark\",\"notifications\":true},\"preferences\":[\"email\",\"sms\"]}"
 </code></pre>
 <p>You need to manually define <code>toJSON</code> or <code>toString</code> for every nested object to get useful output, and there’s no guarantee it’ll work consistently. Debugging complex objects in JavaScript often feels like a chore.</p>
 <h3 id="purescripts-show-clean-safe-and-automatic"><a class="header" href="#purescripts-show-clean-safe-and-automatic">PureScript’s <code>Show</code>: Clean, Safe, and Automatic</a></h3>
@@ -215,12 +249,12 @@ newtype UserProfile = UserProfile { name :: String, settings :: Settings, prefer
 newtype Settings = Settings { theme :: String, notifications :: Boolean }
 
 instance Show Settings where
-  show (Settings { theme, notifications }) = &quot;(Settings &quot; &lt;&gt; show theme &lt;&gt; &quot; &quot; &lt;&gt; show notifications &lt;&gt; &quot;)&quot;
+  show (Settings { theme, notifications }) = "(Settings " &lt;&gt; show theme &lt;&gt; " " &lt;&gt; show notifications &lt;&gt; ")"
 
 instance Show UserProfile where
-  show (UserProfile { name, settings, preferences }) = &quot;(UserProfile &quot; &lt;&gt; show name &lt;&gt; &quot; &quot; &lt;&gt; show settings &lt;&gt; &quot; &quot; &lt;&gt; show preferences &lt;&gt; &quot;)&quot;
+  show (UserProfile { name, settings, preferences }) = "(UserProfile " &lt;&gt; show name &lt;&gt; " " &lt;&gt; show settings &lt;&gt; " " &lt;&gt; show preferences &lt;&gt; ")"
 
-logShow (UserProfile { name: &quot;Alice&quot;, settings: Settings { theme: &quot;dark&quot;, notifications: true }, preferences: [&quot;email&quot;, &quot;sms&quot;] })
+logShow (UserProfile { name: "Alice", settings: Settings { theme: "dark", notifications: true }, preferences: ["email", "sms"] })
 </code></pre>
 <p>This output is clean, readable, and a valid PureScript expression you can paste back into PSCi to recreate the value. Unlike JavaScript, <code>Show</code> ensures consistency and catches errors early.</p>
 <h3 id="why-show-excites-javascript-developers"><a class="header" href="#why-show-excites-javascript-developers">Why <code>Show</code> Excites JavaScript Developers</a></h3>
@@ -235,7 +269,7 @@ logShow (UserProfile { name: &quot;Alice&quot;, settings: Settings { theme: &quo
 <p><strong>Automatic Nesting</strong>: <code>Show</code> composes effortlessly. The <code>UserProfile</code> instance reuses <code>Show</code> for <code>Settings</code>, <code>String</code>, and <code>Array String</code>, saving you from defining string conversions for every nested type, unlike <code>toJSON</code> or <code>toString</code>.</p>
 </li>
 <li>
-<p><strong>Debugging Bliss</strong>: The output is concise and REPL-friendly, perfect for quick debugging. Compare <code>(UserProfile &quot;Alice&quot; (Settings &quot;dark&quot; true) [&quot;email&quot;,&quot;sms&quot;])</code> to JSON’s verbose <code>{&quot;name&quot;:&quot;Alice&quot;,&quot;settings&quot;:{&quot;theme&quot;:&quot;dark&quot;,&quot;notifications&quot;:true},&quot;preferences&quot;:[&quot;email&quot;,&quot;sms&quot;]}</code>.</p>
+<p><strong>Debugging Bliss</strong>: The output is concise and REPL-friendly, perfect for quick debugging. Compare <code>(UserProfile "Alice" (Settings "dark" true) ["email","sms"])</code> to JSON’s verbose <code>{"name":"Alice","settings":{"theme":"dark","notifications":true},"preferences":["email","sms"]}</code>.</p>
 </li>
 </ol>
 <h3 id="but-what-about-jsonstringify"><a class="header" href="#but-what-about-jsonstringify">But What About <code>JSON.stringify</code>?</a></h3>
@@ -249,14 +283,14 @@ logShow (UserProfile { name: &quot;Alice&quot;, settings: Settings { theme: &quo
 import Effect.Console
 logShow true
 logShow 1.0
-logShow &quot;Hello&quot;
+logShow "Hello"
 </code></pre>
 <p>Expected output:</p>
 <pre><code>true
 unit
 1.0
 unit
-&quot;Hello&quot;
+"Hello"
 unit
 </code></pre>
 </li>
@@ -266,11 +300,11 @@ unit
 import Effect.Console
 newtype Settings = Settings { theme :: String, notifications :: Boolean }
 instance Show Settings where
-  show (Settings { theme, notifications }) = &quot;(Settings &quot; &lt;&gt; show theme &lt;&gt; &quot; &quot; &lt;&gt; show notifications &lt;&gt; &quot;)&quot;
-logShow (Settings { theme: &quot;dark&quot;, notifications: true })
+  show (Settings { theme, notifications }) = "(Settings " &lt;&gt; show theme &lt;&gt; " " &lt;&gt; show notifications &lt;&gt; ")"
+logShow (Settings { theme: "dark", notifications: true })
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Settings &quot;dark&quot; true)
+<pre><code>(Settings "dark" true)
 unit
 </code></pre>
 </li>
@@ -280,14 +314,14 @@ unit
 import Effect.Console
 newtype Settings = Settings { theme :: String, notifications :: Boolean }
 instance Show Settings where
-  show (Settings { theme, notifications }) = &quot;(Settings &quot; &lt;&gt; show theme &lt;&gt; &quot; &quot; &lt;&gt; show notifications &lt;&gt; &quot;)&quot;
+  show (Settings { theme, notifications }) = "(Settings " &lt;&gt; show theme &lt;&gt; " " &lt;&gt; show notifications &lt;&gt; ")"
 newtype UserProfile = UserProfile { name :: String, settings :: Settings }
 instance Show UserProfile where
-  show (UserProfile { name, settings }) = &quot;(UserProfile &quot; &lt;&gt; show name &lt;&gt; &quot; &quot; &lt;&gt; show settings &lt;&gt; &quot;)&quot;
-logShow (UserProfile { name: &quot;Alice&quot;, settings: Settings { theme: &quot;dark&quot;, notifications: true } })
+  show (UserProfile { name, settings }) = "(UserProfile " &lt;&gt; show name &lt;&gt; " " &lt;&gt; show settings &lt;&gt; ")"
+logShow (UserProfile { name: "Alice", settings: Settings { theme: "dark", notifications: true } })
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(UserProfile &quot;Alice&quot; (Settings &quot;dark&quot; true))
+<pre><code>(UserProfile "Alice" (Settings "dark" true))
 unit
 </code></pre>
 </li>
@@ -306,8 +340,8 @@ show (\n -&gt; n + 1)
 <div style="break-before: page; page-break-before: always;"></div><h2 id="eq"><a class="header" href="#eq">Eq</a></h2>
 <h3 id="the-javascript-struggle-comparing-objects"><a class="header" href="#the-javascript-struggle-comparing-objects">The JavaScript Struggle: Comparing Objects</a></h3>
 <p>In JavaScript, comparing objects for equality is a common task, but it’s fraught with pitfalls. The <code>===</code> operator checks for strict equality, which works well for primitives like numbers and strings but often fails for complex objects:</p>
-<pre><code class="language-javascript">const user1 = { id: 1, name: &quot;Alice&quot; };
-const user2 = { id: 1, name: &quot;Alice&quot; };
+<pre><code class="language-javascript">const user1 = { id: 1, name: "Alice" };
+const user2 = { id: 1, name: "Alice" };
 console.log(user1 === user2); // false
 console.log(user1 == user2); // false
 </code></pre>
@@ -318,8 +352,8 @@ console.log(user1 == user2); // false
 console.log(areUsersEqual(user1, user2)); // true
 </code></pre>
 <p>This works but is tedious. You must write a new comparison function for every object type, and there’s no built-in way to enforce that objects support equality checks. For nested objects, it gets messier:</p>
-<pre><code class="language-javascript">const profile1 = { user: { id: 1, name: &quot;Alice&quot; }, settings: { theme: &quot;dark&quot; } };
-const profile2 = { user: { id: 1, name: &quot;Alice&quot; }, settings: { theme: &quot;dark&quot; } };
+<pre><code class="language-javascript">const profile1 = { user: { id: 1, name: "Alice" }, settings: { theme: "dark" } };
+const profile2 = { user: { id: 1, name: "Alice" }, settings: { theme: "dark" } };
 console.log(areUsersEqual(profile1, profile2)); // Error: settings not checked
 </code></pre>
 <p>You’d need to extend <code>areUsersEqual</code> to recursively compare <code>settings</code>, and if the object structure changes, you must update the function manually. Libraries like Lodash’s <code>_.isEqual</code> can help, but they’re still runtime solutions with no guarantee of correctness for all types.</p>
@@ -344,8 +378,8 @@ instance Eq Profile where
 </code></pre>
 <p>In PSCi:</p>
 <pre><code class="language-purescript">&gt; import Prelude
-&gt; let profile1 = Profile { user: User { id: 1, name: &quot;Alice&quot; }, settings: Settings { theme: &quot;dark&quot; } }
-&gt; let profile2 = Profile { user: User { id: 1, name: &quot;Alice&quot; }, settings: Settings { theme: &quot;dark&quot; } }
+&gt; let profile1 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
+&gt; let profile2 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
 &gt; profile1 == profile2
 true
 </code></pre>
@@ -378,7 +412,7 @@ console.log(_.isEqual(profile1, profile2)); // true
 <p><strong>Compare Basic Types</strong>:</p>
 <pre><code class="language-purescript">import Prelude
 1 == 2
-&quot;Test&quot; == &quot;Test&quot;
+"Test" == "Test"
 </code></pre>
 <p>Expected output:</p>
 <pre><code>false
@@ -391,8 +425,8 @@ true
 newtype User = User { id :: Int, name :: String }
 instance Eq User where
   eq (User u1) (User u2) = u1.id == u2.id &amp;&amp; u1.name == u2.name
-User { id: 1, name: &quot;Alice&quot; } == User { id: 1, name: &quot;Alice&quot; }
-User { id: 1, name: &quot;Alice&quot; } == User { id: 2, name: &quot;Bob&quot; }
+User { id: 1, name: "Alice" } == User { id: 1, name: "Alice" }
+User { id: 1, name: "Alice" } == User { id: 2, name: "Bob" }
 </code></pre>
 <p>Expected output:</p>
 <pre><code>true
@@ -408,7 +442,7 @@ instance Eq User where
   eq (User u1) (User u2) = u1.id == u2.id &amp;&amp; u1.name == u2.name
 instance Eq Profile where
   eq (Profile p1) (Profile p2) = p1.user == p2.user
-Profile { user: User { id: 1, name: &quot;Alice&quot; } } == Profile { user: User { id: 1, name: &quot;Alice&quot; } }
+Profile { user: User { id: 1, name: "Alice" } } == Profile { user: User { id: 1, name: "Alice" } }
 </code></pre>
 <p>Expected output:</p>
 <pre><code>true
@@ -429,21 +463,21 @@ Profile { user: User { id: 1, name: &quot;Alice&quot; } } == Profile { user: Use
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ord"><a class="header" href="#ord">Ord</a></h2>
 <h3 id="the-javascript-struggle-sorting-objects"><a class="header" href="#the-javascript-struggle-sorting-objects">The JavaScript Struggle: Sorting Objects</a></h3>
 <p>JavaScript developers often need to sort or compare objects, like user profiles, by specific fields. The comparison operators (<code>&lt;</code>, <code>&gt;</code>) work for numbers and strings but fail for objects:</p>
-<pre><code class="language-javascript">const user1 = { id: 1, name: &quot;Alice&quot; };
-const user2 = { id: 2, name: &quot;Bob&quot; };
-console.log(user1 &lt; user2); // false (coerces to strings: &quot;[object Object]&quot;)
+<pre><code class="language-javascript">const user1 = { id: 1, name: "Alice" };
+const user2 = { id: 2, name: "Bob" };
+console.log(user1 &lt; user2); // false (coerces to strings: "[object Object]")
 </code></pre>
 <p>JavaScript’s <code>&lt;</code> operator isn’t helpful here, as it compares object references or stringified versions. To sort an array of users by <code>id</code>, you write a custom function for <code>Array.sort</code>:</p>
 <pre><code class="language-javascript">const users = [
-  { id: 2, name: &quot;Bob&quot; },
-  { id: 1, name: &quot;Alice&quot; }
+  { id: 2, name: "Bob" },
+  { id: 1, name: "Alice" }
 ];
 users.sort((a, b) =&gt; a.id - b.id);
-console.log(users); // [{ id: 1, name: &quot;Alice&quot; }, { id: 2, name: &quot;Bob&quot; }]
+console.log(users); // [{ id: 1, name: "Alice" }, { id: 2, name: "Bob" }]
 </code></pre>
 <p>This works but requires a new comparison function for every object type or sorting criterion. For nested objects, like a <code>profile</code> with a <code>user</code>, it’s even more tedious:</p>
-<pre><code class="language-javascript">const profile1 = { user: { id: 2, name: &quot;Bob&quot; }, settings: { theme: &quot;dark&quot; } };
-const profile2 = { user: { id: 1, name: &quot;Alice&quot; }, settings: { theme: &quot;light&quot; } };
+<pre><code class="language-javascript">const profile1 = { user: { id: 2, name: "Bob" }, settings: { theme: "dark" } };
+const profile2 = { user: { id: 1, name: "Alice" }, settings: { theme: "light" } };
 profiles.sort((a, b) =&gt; a.user.id - b.user.id);
 </code></pre>
 <p>You must manually navigate nested fields, and there’s no guarantee the comparison is defined or consistent. Libraries like Lodash’s <code>_.orderBy</code> help, but they’re still runtime solutions without type safety.</p>
@@ -474,8 +508,8 @@ instance Ord Profile where
 </code></pre>
 <p>In PSCi:</p>
 <pre><code class="language-purescript">&gt; import Prelude
-&gt; let profile1 = Profile { user: UniqueAppUser { id: 2, name: &quot;Bob&quot; }, settings: Settings { theme: &quot;dark&quot; } }
-&gt; let profile2 = Profile { user: UniqueAppUser { id: 1, name: &quot;Alice&quot; }, settings: Settings { theme: &quot;light&quot; } }
+&gt; let profile1 = Profile { user: UniqueAppUser { id: 2, name: "Bob" }, settings: Settings { theme: "dark" } }
+&gt; let profile2 = Profile { user: UniqueAppUser { id: 1, name: "Alice" }, settings: Settings { theme: "light" } }
 &gt; compare profile1 profile2
 GT
 &gt; profile1 &lt; profile2
@@ -483,7 +517,7 @@ false
 &gt; import Data.Array
 &gt; import Effect.Console
 &gt; logShow $ sort [profile1, profile2]
-[(Profile (UniqueAppUser 1 &quot;Alice&quot;) (Settings &quot;light&quot;)), (Profile (UniqueAppUser 2 &quot;Bob&quot;) (Settings &quot;dark&quot;))]
+[(Profile (UniqueAppUser 1 "Alice") (Settings "light")), (Profile (UniqueAppUser 2 "Bob") (Settings "dark"))]
 unit
 </code></pre>
 <p>The <code>sort</code> function uses <code>Ord</code> to order by <code>user.id</code>. The compiler ensures every type used with <code>compare</code> or <code>&lt;</code> has an <code>Ord</code> instance, preventing errors:</p>
@@ -506,7 +540,7 @@ unit
 <p>Lodash’s <code>_.orderBy</code> simplifies sorting:</p>
 <pre><code class="language-javascript">const _ = require('lodash');
 console.log(_.orderBy([profile1, profile2], ['user.id'], ['asc']));
-// [{ user: { id: 1, name: &quot;Alice&quot; }, settings: { theme: &quot;light&quot; } }, ...]
+// [{ user: { id: 1, name: "Alice" }, settings: { theme: "light" } }, ...]
 </code></pre>
 <p>It’s flexible but runtime-based. Misspelling <code>user.id</code> or using an invalid property causes errors at runtime. <code>Ord</code> ensures correctness at compile time and integrates with PureScript’s <code>sort</code>, streamlining type-safe development.</p>
 <h3 id="repl-exercises-2"><a class="header" href="#repl-exercises-2">REPL Exercises</a></h3>
@@ -516,7 +550,7 @@ console.log(_.orderBy([profile1, profile2], ['user.id'], ['asc']));
 <p><strong>Compare Basic Types</strong>:</p>
 <pre><code class="language-purescript">import Prelude
 compare 1 2
-compare &quot;A&quot; &quot;Z&quot;
+compare "A" "Z"
 </code></pre>
 <p>Expected output:</p>
 <pre><code>LT
@@ -529,11 +563,11 @@ LT
 newtype UniqueAppUser = UniqueAppUser { id :: Int, name :: String }
 derive instance Eq UniqueAppUser
 instance Show UniqueAppUser where
-  show (UniqueAppUser { id, name }) = &quot;(UniqueAppUser &quot; &lt;&gt; show id &lt;&gt; &quot; &quot; &lt;&gt; show name &lt;&gt; &quot;)&quot;
+  show (UniqueAppUser { id, name }) = "(UniqueAppUser " &lt;&gt; show id &lt;&gt; " " &lt;&gt; show name &lt;&gt; ")"
 instance Ord UniqueAppUser where
   compare (UniqueAppUser u1) (UniqueAppUser u2) = compare u1.id u2.id
-compare (UniqueAppUser { id: 1, name: &quot;Alice&quot; }) (UniqueAppUser { id: 2, name: &quot;Bob&quot; })
-(UniqueAppUser { id: 1, name: &quot;Alice&quot; }) &lt; (UniqueAppUser { id: 2, name: &quot;Bob&quot; })
+compare (UniqueAppUser { id: 1, name: "Alice" }) (UniqueAppUser { id: 2, name: "Bob" })
+(UniqueAppUser { id: 1, name: "Alice" }) &lt; (UniqueAppUser { id: 2, name: "Bob" })
 </code></pre>
 <p>Expected output:</p>
 <pre><code>LT
@@ -548,13 +582,13 @@ import Effect.Console
 newtype UniqueAppUser = UniqueAppUser { id :: Int, name :: String }
 derive instance Eq UniqueAppUser
 instance Show UniqueAppUser where
-  show (UniqueAppUser { id, name }) = &quot;(UniqueAppUser &quot; &lt;&gt; show id &lt;&gt; &quot; &quot; &lt;&gt; show name &lt;&gt; &quot;)&quot;
+  show (UniqueAppUser { id, name }) = "(UniqueAppUser " &lt;&gt; show id &lt;&gt; " " &lt;&gt; show name &lt;&gt; ")"
 instance Ord UniqueAppUser where
   compare (UniqueAppUser u1) (UniqueAppUser u2) = compare u1.id u2.id
-logShow $ sort [UniqueAppUser { id: 2, name: &quot;Bob&quot; }, UniqueAppUser { id: 1, name: &quot;Alice&quot; }]
+logShow $ sort [UniqueAppUser { id: 2, name: "Bob" }, UniqueAppUser { id: 1, name: "Alice" }]
 </code></pre>
 <p>Expected output:</p>
-<pre><code>[(UniqueAppUser 1 &quot;Alice&quot;), (UniqueAppUser 2 &quot;Bob&quot;)]
+<pre><code>[(UniqueAppUser 1 "Alice"), (UniqueAppUser 2 "Bob")]
 unit
 </code></pre>
 </li>
@@ -573,33 +607,33 @@ compare (\n -&gt; n + 1) (\n -&gt; n + 1)
 <div style="break-before: page; page-break-before: always;"></div><h2 id="semigroups-and-monoids"><a class="header" href="#semigroups-and-monoids">Semigroups and Monoids</a></h2>
 <h3 id="the-javascript-struggle-combining-values"><a class="header" href="#the-javascript-struggle-combining-values">The JavaScript Struggle: Combining Values</a></h3>
 <p>In JavaScript, combining values like strings or arrays is common, using <code>+</code> for strings or <code>concat</code> for arrays:</p>
-<pre><code class="language-javascript">console.log(&quot;Hello&quot; + &quot; &quot; + &quot;World&quot;); // &quot;Hello World&quot;
+<pre><code class="language-javascript">console.log("Hello" + " " + "World"); // "Hello World"
 console.log([1, 2, 3].concat([4, 5]); // [1, 2, 3, 4, 5]
 </code></pre>
 <p>But for custom types, like merging user settings objects, there's no standard way:</p>
-<pre><code class="language-javascript">const settings1 = { theme: &quot;dark&quot;, notifications: true };
-const settings2 = { theme: &quot;light&quot;, alerts: true };
-const merged = { ...settings1, ...settings2 }; // { theme: &quot;light&quot;, notifications: true, alerts: true }
+<pre><code class="language-javascript">const settings1 = { theme: "dark", notifications: true };
+const settings2 = { theme: "light", alerts: true };
+const merged = { ...settings1, ...settings2 }; // { theme: "light", notifications: true, alerts: true }
 console.log(merged);
 </code></pre>
 <p>This works but is ad hoc. You must define custom merge functions for each type, and there's no guarantee of associativity (e.g., <code>(a + b) + c == a + (b + c)</code>). Associativity means the order of grouping combinations doesn't matter, which is crucial for predictable behavior in larger operations like folding arrays. For example, consider merging user profiles with nested <code>address</code> objects:</p>
-<pre><code class="language-javascript">const profileA = { name: &quot;Alice&quot;, address: { street: &quot;123 Main St&quot;, city: undefined, zip: undefined } };
-const profileB = { name: &quot;Bob&quot;, address: { street: undefined, city: &quot;New York&quot;, zip: undefined } };
-const profileC = { name: &quot;Charlie&quot;, address: { street: undefined, city: undefined, zip: &quot;10001&quot; } };
+<pre><code class="language-javascript">const profileA = { name: "Alice", address: { street: "123 Main St", city: undefined, zip: undefined } };
+const profileB = { name: "Bob", address: { street: undefined, city: "New York", zip: undefined } };
+const profileC = { name: "Charlie", address: { street: undefined, city: undefined, zip: "10001" } };
 
 // Merging A and B first, then with C
 const result1 = { ...{ ...profileA, ...profileB }, ...profileC };
-// Result: { name: &quot;Charlie&quot;, address: { street: undefined, city: undefined, zip: &quot;10001&quot; } } – street and city are lost
+// Result: { name: "Charlie", address: { street: undefined, city: undefined, zip: "10001" } } – street and city are lost
 
 // Merging B and C first, then with A
 const result2 = { ...{ ...profileB, ...profileC }, ...profileA };
-// Result: { name: &quot;Alice&quot;, address: { street: &quot;123 Main St&quot;, city: undefined, zip: undefined } } – city and zip are lost
+// Result: { name: "Alice", address: { street: "123 Main St", city: undefined, zip: undefined } } – city and zip are lost
 </code></pre>
-<p>The grouping affects which nested <code>address</code> properties survive, breaking associativity—the results aren't the same. This can lead to subtle bugs in larger merges or folds, where the order of operations unexpectedly changes the result. For empty values (like empty object <code>{}</code>), it's often clear what the &quot;identity&quot; is for simple spreads (it combines with any object to return the object unchanged), but for custom merges like this, <code>{}</code> might not be an identity if merging adds logic.</p>
+<p>The grouping affects which nested <code>address</code> properties survive, breaking associativity—the results aren't the same. This can lead to subtle bugs in larger merges or folds, where the order of operations unexpectedly changes the result. For empty values (like empty object <code>{}</code>), it's often clear what the "identity" is for simple spreads (it combines with any object to return the object unchanged), but for custom merges like this, <code>{}</code> might not be an identity if merging adds logic.</p>
 <p>For more complex combinations, like folding an array of objects, you need custom reduce functions:</p>
 <pre><code class="language-javascript">const allProfiles = [profileA, profileB, profileC];
 const mergedAll = allProfiles.reduce((acc, p) =&gt; ({ ...acc, ...p }), {});
-console.log(mergedAll); // { name: &quot;Charlie&quot;, address: { street: undefined, city: undefined, zip: &quot;10001&quot; } } – depends on order, nested fields overwritten
+console.log(mergedAll); // { name: "Charlie", address: { street: undefined, city: undefined, zip: "10001" } } – depends on order, nested fields overwritten
 </code></pre>
 <p>This is flexible but error-prone, with no type safety for the combination operation or empty value.</p>
 <h3 id="purescripts-semigroup-and-monoid-type-safe-combining"><a class="header" href="#purescripts-semigroup-and-monoid-type-safe-combining">PureScript’s <code>Semigroup</code> and <code>Monoid</code>: Type-Safe Combining</a></h3>
@@ -624,7 +658,7 @@ instance Monoid Address where
   mempty = Address { street: Nothing, city: Nothing, zip: Nothing }
 
 instance Show Address where
-  show (Address a) = &quot;(Address &quot; &lt;&gt; show a &lt;&gt; &quot;)&quot;
+  show (Address a) = "(Address " &lt;&gt; show a &lt;&gt; ")"
 
 newtype Profile = Profile { name :: Maybe String, address :: Address }
 
@@ -638,21 +672,21 @@ instance Monoid Profile where
   mempty = Profile { name: Nothing, address: mempty }
 
 instance Show Profile where
-  show (Profile p) = &quot;(Profile &quot; &lt;&gt; show p &lt;&gt; &quot;)&quot;
+  show (Profile p) = "(Profile " &lt;&gt; show p &lt;&gt; ")"
 </code></pre>
 <p>In PSCi:</p>
 <pre><code class="language-purescript">&gt; import Prelude
 &gt; import Effect.Console
 &gt; import Data.Maybe
 &gt; import Control.Alt ((&lt;|&gt;))
-&gt; let a = Profile { name: Just &quot;Alice&quot;, address: Address { street: Just &quot;123 Main St&quot;, city: Nothing, zip: Nothing } }
-&gt; let b = Profile { name: Just &quot;Bob&quot;, address: Address { street: Nothing, city: Just &quot;New York&quot;, zip: Nothing } }
-&gt; let c = Profile { name: Just &quot;Charlie&quot;, address: Address { street: Nothing, city: Nothing, zip: Just &quot;10001&quot; } }
+&gt; let a = Profile { name: Just "Alice", address: Address { street: Just "123 Main St", city: Nothing, zip: Nothing } }
+&gt; let b = Profile { name: Just "Bob", address: Address { street: Nothing, city: Just "New York", zip: Nothing } }
+&gt; let c = Profile { name: Just "Charlie", address: Address { street: Nothing, city: Nothing, zip: Just "10001" } }
 &gt; logShow $ (a &lt;&gt; b) &lt;&gt; c
-(Profile { name: (Just &quot;Alice&quot;), address: (Address { street: (Just &quot;123 Main St&quot;), city: (Just &quot;New York&quot;), zip: (Just &quot;10001&quot;) }) })
+(Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })
 unit
 &gt; logShow $ a &lt;&gt; (b &lt;&gt; c)
-(Profile { name: (Just &quot;Alice&quot;), address: (Address { street: (Just &quot;123 Main St&quot;), city: (Just &quot;New York&quot;), zip: (Just &quot;10001&quot;) }) })
+(Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })
 unit
 </code></pre>
 <p>The results are the same regardless of grouping, adhering to the associativity law. This encourages designs where combinations are predictable and deep merging is explicit, avoiding the pitfalls in JavaScript's custom merges. The compiler ensures all types used with <code>&lt;&gt;</code> have a <code>Semigroup</code> instance, and the laws (associativity, identity) are enforced by convention.</p>
@@ -680,11 +714,11 @@ unit
 <p><strong>Combine Strings and Arrays</strong>:</p>
 <pre><code class="language-purescript">import Prelude
 import Effect.Console
-logShow $ &quot;Hello&quot; &lt;&gt; &quot; &quot; &lt;&gt; &quot;World&quot;
+logShow $ "Hello" &lt;&gt; " " &lt;&gt; "World"
 logShow $ [1, 2, 3] &lt;&gt; [4, 5]
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;Hello World&quot;
+<pre><code>"Hello World"
 unit
 [1,2,3,4,5]
 unit
@@ -695,11 +729,11 @@ unit
 <pre><code class="language-purescript">import Prelude
 import Effect.Console
 import Data.Monoid
-logShow $ mempty &lt;&gt; &quot;Hello&quot; &lt;&gt; mempty
+logShow $ mempty &lt;&gt; "Hello" &lt;&gt; mempty
 logShow $ mempty &lt;&gt; [1, 2] &lt;&gt; mempty
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;Hello&quot;
+<pre><code>"Hello"
 unit
 [1,2]
 unit
@@ -722,7 +756,7 @@ instance Semigroup Address where
 instance Monoid Address where
   mempty = Address { street: Nothing, city: Nothing, zip: Nothing }
 instance Show Address where
-  show (Address a) = &quot;(Address &quot; &lt;&gt; show a &lt;&gt; &quot;)&quot;
+  show (Address a) = "(Address " &lt;&gt; show a &lt;&gt; ")"
 newtype Profile = Profile { name :: Maybe String, address :: Address }
 instance Semigroup Profile where
   append (Profile p1) (Profile p2) = Profile {
@@ -732,11 +766,11 @@ instance Semigroup Profile where
 instance Monoid Profile where
   mempty = Profile { name: Nothing, address: mempty }
 instance Show Profile where
-  show (Profile p) = &quot;(Profile &quot; &lt;&gt; show p &lt;&gt; &quot;)&quot;
-logShow $ Profile { name: Just &quot;Alice&quot;, address: Address { street: Just &quot;123 Main St&quot;, city: Nothing, zip: Nothing } } &lt;&gt; Profile { name: Nothing, address: Address { street: Nothing, city: Just &quot;New York&quot;, zip: Just &quot;10001&quot; } }
+  show (Profile p) = "(Profile " &lt;&gt; show p &lt;&gt; ")"
+logShow $ Profile { name: Just "Alice", address: Address { street: Just "123 Main St", city: Nothing, zip: Nothing } } &lt;&gt; Profile { name: Nothing, address: Address { street: Nothing, city: Just "New York", zip: Just "10001" } }
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Profile { name: (Just &quot;Alice&quot;), address: (Address { street: (Just &quot;123 Main St&quot;), city: (Just &quot;New York&quot;), zip: (Just &quot;10001&quot;) }) })
+<pre><code>(Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })
 unit
 </code></pre>
 </li>
@@ -749,7 +783,7 @@ unit
 <pre><code class="language-javascript">const numbers = [1, 2, 3, 4, 5];
 const sum = numbers.reduce((acc, x) =&gt; acc + x, 0); // 15
 console.log(sum);
-const concatenated = numbers.reduce((acc, x) =&gt; acc + x.toString(), &quot;&quot;); // &quot;12345&quot;
+const concatenated = numbers.reduce((acc, x) =&gt; acc + x.toString(), ""); // "12345"
 console.log(concatenated);
 </code></pre>
 <p>This works for arrays, but for other structures like optional values (similar to Maybe) or pairs (similar to Tuple), there's no standard way. For an optional value, you might hack it:</p>
@@ -771,7 +805,7 @@ console.log(sumObj);
 <pre><code class="language-javascript">const myMap = new Map([['a', 1], ['b', 2], ['c', 3]]);
 const sumMap = Array.from(myMap.values()).reduce((acc, v) =&gt; acc + v, 0); // 6
 console.log(sumMap);
-const concatenatedKeys = Array.from(myMap.keys()).reduce((acc, k) =&gt; acc + k, &quot;&quot;); // &quot;abc&quot;
+const concatenatedKeys = Array.from(myMap.keys()).reduce((acc, k) =&gt; acc + k, ""); // "abc"
 console.log(concatenatedKeys);
 </code></pre>
 <p>This conversion is repetitive and inefficient for large Maps. Forget it, and you get runtime errors. No type safety checks if the values are reducible (e.g., numbers for sum).</p>
@@ -791,7 +825,7 @@ import Data.Foldable
 logShow $ foldMap show [1, 2, 3, 4, 5]
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;12345&quot;
+<pre><code>"12345"
 unit
 </code></pre>
 <p>Here, we map each number to a string (using <code>show</code>), and combine with the string monoid (concatenation). This is like JS reduce with string concatenation, but generalized.</p>
@@ -802,9 +836,9 @@ logShow $ foldMap show (Just 42)
 logShow $ foldMap show (Nothing :: Maybe Int)
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;42&quot;
+<pre><code>"42"
 unit
-&quot;&quot;
+""
 unit
 </code></pre>
 <p>Folding a <code>Tuple</code> (note: folds over the second component, treating the first as fixed):</p>
@@ -813,21 +847,21 @@ unit
 logShow $ foldMap show (Tuple 1 2)
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;2&quot;
+<pre><code>"2"
 unit
 </code></pre>
 <p>For a type like <code>Map</code> (from <code>purescript-ordered-collections</code>), which has a Foldable instance, you can fold directly without conversion:</p>
 <p>In PSCi:</p>
 <pre><code class="language-purescript">import Data.Map as Map
 import Data.Tuple
-myMap = Map.fromFoldable [Tuple &quot;a&quot; 1, Tuple &quot;b&quot; 2, Tuple &quot;c&quot; 3]
+myMap = Map.fromFoldable [Tuple "a" 1, Tuple "b" 2, Tuple "c" 3]
 logShow $ foldl (+) 0 myMap
 logShow $ foldMap show myMap
 </code></pre>
 <p>Expected output:</p>
 <pre><code>6
 unit
-&quot;123&quot;
+"123"
 unit
 </code></pre>
 <p>The compiler ensures all types used with fold functions have a <code>Foldable</code> instance, catching errors at compile time. <code>Foldable</code> captures the notion of an ordered container that can be reduced.</p>
@@ -851,13 +885,13 @@ import Effect.Console
 import Data.Foldable
 import Data.Maybe
 import Data.Tuple
-logShow $ foldMap (\s -&gt; s &lt;&gt; &quot; logged in&quot;) (Just &quot;user1&quot;)
-logShow $ foldMap (\s -&gt; &quot;status: &quot; &lt;&gt; s) (Tuple &quot;user2&quot; &quot; active&quot;)
+logShow $ foldMap (\s -&gt; s &lt;&gt; " logged in") (Just "user1")
+logShow $ foldMap (\s -&gt; "status: " &lt;&gt; s) (Tuple "user2" " active")
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;user1 logged in&quot;
+<pre><code>"user1 logged in"
 unit
-&quot; active status:&quot;
+" active status:"
 unit
 </code></pre>
 <p>This generalizes reduce, making code reusable across structures.</p>
@@ -875,7 +909,7 @@ logShow $ foldMap show [1, 2, 3, 4, 5]
 <p>Expected output:</p>
 <pre><code>15
 unit
-&quot;12345&quot;
+"12345"
 unit
 </code></pre>
 </li>
@@ -889,9 +923,9 @@ logShow $ foldMap show (Just 42)
 logShow $ foldMap show (Nothing :: Maybe Int)
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;42&quot;
+<pre><code>"42"
 unit
-&quot;&quot;
+""
 unit
 </code></pre>
 </li>
@@ -904,7 +938,7 @@ import Data.Tuple
 logShow $ foldMap show (Tuple 1 2)
 </code></pre>
 <p>Expected output:</p>
-<pre><code>&quot;2&quot;
+<pre><code>"2"
 unit
 </code></pre>
 </li>
@@ -982,10 +1016,10 @@ unit
 <p>For <code>Tuple</code> (maps second component):</p>
 <p>In PSCi:</p>
 <pre><code class="language-purescript">import Data.Tuple
-logShow $ map (\x -&gt; x * 2) (Tuple &quot;fixed&quot; 42)
+logShow $ map (\x -&gt; x * 2) (Tuple "fixed" 42)
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Tuple &quot;fixed&quot; 84)
+<pre><code>(Tuple "fixed" 84)
 unit
 </code></pre>
 <p>For asynchronous effects (like JS promises, via <code>Aff</code> from <code>purescript-aff</code>):</p>
@@ -1021,13 +1055,13 @@ unit
 import Effect.Console
 import Data.Maybe
 import Data.Tuple
-logShow $ map (\s -&gt; s &lt;&gt; &quot; logged in&quot;) (Just &quot;user1&quot;)
-logShow $ map (\s -&gt; s &lt;&gt; &quot; status:&quot;) (Tuple &quot;user2&quot; &quot;active&quot;)
+logShow $ map (\s -&gt; s &lt;&gt; " logged in") (Just "user1")
+logShow $ map (\s -&gt; s &lt;&gt; " status:") (Tuple "user2" "active")
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just &quot;user1 logged in&quot;)
+<pre><code>(Just "user1 logged in")
 unit
-(Tuple &quot;user2&quot; &quot;active status:&quot;)
+(Tuple "user2" "active status:")
 unit
 </code></pre>
 <p>This generalizes mapping, reusable across structures.</p>
@@ -1066,10 +1100,10 @@ unit
 <pre><code class="language-purescript">import Prelude
 import Effect.Console
 import Data.Tuple
-logShow $ map (\x -&gt; x * 2) (Tuple &quot;fixed&quot; 42)
+logShow $ map (\x -&gt; x * 2) (Tuple "fixed" 42)
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Tuple &quot;fixed&quot; 84)
+<pre><code>(Tuple "fixed" 84)
 unit
 </code></pre>
 </li>
@@ -1085,19 +1119,19 @@ unit
   }
   return null;
 }
-console.log(createUser(&quot;Phillip&quot;, &quot;Freeman&quot;, &quot;phil@example.com&quot;)); // { first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; }
-console.log(createUser(&quot;Phillip&quot;, null, &quot;phil@example.com&quot;)); // null
+console.log(createUser("Phillip", "Freeman", "phil@example.com")); // { first: "Phillip", last: "Freeman", email: "phil@example.com" }
+console.log(createUser("Phillip", null, "phil@example.com")); // null
 </code></pre>
 <p>This is straightforward but limited. To provide better feedback, you might validate each input and return a result with either the user object or errors, wrapping the result in a context:</p>
 <pre><code class="language-javascript">function validateInput(value, field) {
   if (!value) return { valid: false, errors: [`${field} is required`] };
-  if (field === &quot;email&quot; &amp;&amp; !value.includes(&quot;@&quot;)) return { valid: false, errors: [&quot;Valid email is required&quot;] };
+  if (field === "email" &amp;&amp; !value.includes("@")) return { valid: false, errors: ["Valid email is required"] };
   return { valid: true, value };
 }
 function createUserValidated(first, last, email) {
-  const firstResult = validateInput(first, &quot;First name&quot;);
-  const lastResult = validateInput(last, &quot;Last name&quot;);
-  const emailResult = validateInput(email, &quot;Email&quot;);
+  const firstResult = validateInput(first, "First name");
+  const lastResult = validateInput(last, "Last name");
+  const emailResult = validateInput(email, "Email");
   if (firstResult.valid &amp;&amp; lastResult.valid &amp;&amp; emailResult.valid) {
     return { valid: true, value: { first: firstResult.value, last: lastResult.value, email: emailResult.value } };
   }
@@ -1107,10 +1141,10 @@ function createUserValidated(first, last, email) {
   if (!emailResult.valid) errors.push(...emailResult.errors);
   return { valid: false, errors };
 }
-console.log(createUserValidated(&quot;Phillip&quot;, &quot;Freeman&quot;, &quot;phil@example.com&quot;)); 
-// { valid: true, value: { first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; } }
-console.log(createUserValidated(&quot;Phillip&quot;, null, &quot;invalid&quot;)); 
-// { valid: false, errors: [&quot;Last name is required&quot;, &quot;Valid email is required&quot;] }
+console.log(createUserValidated("Phillip", "Freeman", "phil@example.com")); 
+// { valid: true, value: { first: "Phillip", last: "Freeman", email: "phil@example.com" } }
+console.log(createUserValidated("Phillip", null, "invalid")); 
+// { valid: false, errors: ["Last name is required", "Valid email is required"] }
 </code></pre>
 <p>This improved version applies <code>createUser</code> to validated inputs within a context (<code>{ valid, value }</code> or <code>{ errors }</code>), but it’s repetitive. You manually check each result, combine errors, and ensure types match. Extending this to other structures (e.g., arrays or async data) requires more custom code, and there’s no type safety to catch errors early, risking runtime issues if inputs are unexpected types.</p>
 <h3 id="purescripts-applicative-structured-function-application"><a class="header" href="#purescripts-applicative-structured-function-application">PureScript’s <code>Applicative</code>: Structured Function Application</a></h3>
@@ -1133,11 +1167,11 @@ console.log(createUserValidated(&quot;Phillip&quot;, null, &quot;invalid&quot;))
 import Effect.Console
 import Data.Maybe
 createUser first last email = { first, last, email }
-logShow $ pure createUser &lt;*&gt; Just &quot;Phillip&quot; &lt;*&gt; Just &quot;Freeman&quot; &lt;*&gt; Just &quot;phil@example.com&quot; 
-logShow $ pure createUser &lt;*&gt; Just &quot;Phillip&quot; &lt;*&gt; (Nothing :: Maybe String) &lt;*&gt; Just &quot;phil@example.com&quot; 
+logShow $ pure createUser &lt;*&gt; Just "Phillip" &lt;*&gt; Just "Freeman" &lt;*&gt; Just "phil@example.com" 
+logShow $ pure createUser &lt;*&gt; Just "Phillip" &lt;*&gt; (Nothing :: Maybe String) &lt;*&gt; Just "phil@example.com" 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just { first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; })
+<pre><code>(Just { first: "Phillip", last: "Freeman", email: "phil@example.com" })
 unit
 Nothing
 unit
@@ -1148,10 +1182,10 @@ unit
 import Effect.Console
 import Data.Array
 createUser first last email = { first, last, email }
-logShow $ pure createUser &lt;*&gt; [&quot;Phillip&quot;, &quot;Phil&quot;] &lt;*&gt; [&quot;Freeman&quot;, &quot;Smith&quot;] &lt;*&gt; [&quot;phil@example.com&quot;, &quot;psmith@example.com&quot;] 
+logShow $ pure createUser &lt;*&gt; ["Phillip", "Phil"] &lt;*&gt; ["Freeman", "Smith"] &lt;*&gt; ["phil@example.com", "psmith@example.com"] 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>[{ first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Smith&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Smith&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Freeman&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Smith&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Smith&quot;, email: &quot;psmith@example.com&quot; }]
+<pre><code>[{ first: "Phillip", last: "Freeman", email: "phil@example.com" },{ first: "Phillip", last: "Freeman", email: "psmith@example.com" },{ first: "Phillip", last: "Smith", email: "phil@example.com" },{ first: "Phillip", last: "Smith", email: "psmith@example.com" },{ first: "Phil", last: "Freeman", email: "phil@example.com" },{ first: "Phil", last: "Freeman", email: "psmith@example.com" },{ first: "Phil", last: "Smith", email: "phil@example.com" },{ first: "Phil", last: "Smith", email: "psmith@example.com" }]
 unit
 </code></pre>
 <p>The compiler ensures <code>Applicative</code> instances exist and types match, catching errors at compile time. Applicative laws (identity, composition, homomorphism) ensure predictable behavior, unlike JavaScript’s manual checks.</p>
@@ -1177,11 +1211,11 @@ unit
 import Effect.Console
 import Data.Maybe
 createUser first last email = { first, last, email }
-logShow $ pure createUser &lt;*&gt; Just &quot;Phillip&quot; &lt;*&gt; Just &quot;Freeman&quot; &lt;*&gt; Just &quot;phil@example.com&quot;
-logShow $ pure createUser &lt;*&gt; Just &quot;Phillip&quot; &lt;*&gt; (Nothing :: Maybe String) &lt;*&gt; Just &quot;phil@example.com&quot; 
+logShow $ pure createUser &lt;*&gt; Just "Phillip" &lt;*&gt; Just "Freeman" &lt;*&gt; Just "phil@example.com"
+logShow $ pure createUser &lt;*&gt; Just "Phillip" &lt;*&gt; (Nothing :: Maybe String) &lt;*&gt; Just "phil@example.com" 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just { first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; })
+<pre><code>(Just { first: "Phillip", last: "Freeman", email: "phil@example.com" })
 unit
 Nothing
 unit
@@ -1193,10 +1227,10 @@ unit
 import Effect.Console
 import Data.Array
 createUser first last email = { first, last, email }
-logShow $ pure createUser &lt;*&gt; [&quot;Phillip&quot;, &quot;Phil&quot;] &lt;*&gt; [&quot;Freeman&quot;, &quot;Smith&quot;] &lt;*&gt; [&quot;phil@example.com&quot;, &quot;psmith@example.com&quot;]
+logShow $ pure createUser &lt;*&gt; ["Phillip", "Phil"] &lt;*&gt; ["Freeman", "Smith"] &lt;*&gt; ["phil@example.com", "psmith@example.com"]
 </code></pre>
 <p>Expected output:</p>
-<pre><code>[{ first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Freeman&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Smith&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phillip&quot;, last: &quot;Smith&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Freeman&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Freeman&quot;, email: &quot;psmith@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Smith&quot;, email: &quot;phil@example.com&quot; },{ first: &quot;Phil&quot;, last: &quot;Smith&quot;, email: &quot;psmith@example.com&quot; }]
+<pre><code>[{ first: "Phillip", last: "Freeman", email: "phil@example.com" },{ first: "Phillip", last: "Freeman", email: "psmith@example.com" },{ first: "Phillip", last: "Smith", email: "phil@example.com" },{ first: "Phillip", last: "Smith", email: "psmith@example.com" },{ first: "Phil", last: "Freeman", email: "phil@example.com" },{ first: "Phil", last: "Freeman", email: "psmith@example.com" },{ first: "Phil", last: "Smith", email: "phil@example.com" },{ first: "Phil", last: "Smith", email: "psmith@example.com" }]
 unit
 </code></pre>
 </li>
@@ -1206,7 +1240,7 @@ unit
  import Effect.Console
  newtype Point a = Point { x :: a, y :: a }
  instance Show a =&gt; Show (Point a) where
-   show (Point p) = &quot;(Point &quot; &lt;&gt; show p.x &lt;&gt; &quot; &quot; &lt;&gt; show p.y &lt;&gt; &quot;)&quot;
+   show (Point p) = "(Point " &lt;&gt; show p.x &lt;&gt; " " &lt;&gt; show p.y &lt;&gt; ")"
  instance Functor Point where
    map f (Point p) = Point { x: f p.x, y: f p.y }
  instance Apply Point where
@@ -1235,17 +1269,17 @@ unit
 <p>In JavaScript, you often validate collections of data, like an array of phone numbers, to ensure each element is valid before using it. A common approach is mapping over the array with a validation function and collecting results or errors:</p>
 <pre><code class="language-javascript">function validatePhoneNumber(phone) {
   const regex = /^\d{3}-\d{3}-\d{4}$/;
-  return regex.test(phone) ? { valid: true, value: phone } : { valid: false, errors: [&quot;Invalid phone format&quot;] };
+  return regex.test(phone) ? { valid: true, value: phone } : { valid: false, errors: ["Invalid phone format"] };
 }
 function validatePhones(phones) {
   const results = phones.map(validatePhoneNumber);
   const errors = results.filter(r =&gt; !r.valid).map(r =&gt; r.errors).flat();
   return errors.length ? { valid: false, errors } : { valid: true, value: results.map(r =&gt; r.value) };
 }
-console.log(validatePhones([&quot;555-555-5555&quot;, &quot;555-555-0000&quot;])); 
-// { valid: true, value: [&quot;555-555-5555&quot;, &quot;555-555-0000&quot;] }
-console.log(validatePhones([&quot;555-555-5555&quot;, &quot;invalid&quot;])); 
-// { valid: false, errors: [&quot;Invalid phone format&quot;] }
+console.log(validatePhones(["555-555-5555", "555-555-0000"])); 
+// { valid: true, value: ["555-555-5555", "555-555-0000"] }
+console.log(validatePhones(["555-555-5555", "invalid"])); 
+// { valid: false, errors: ["Invalid phone format"] }
 </code></pre>
 <p><strong>How This Differs from the Applicative Example</strong>: Unlike the Applicative example’s <code>createUserValidated</code>, which validates and combines independent inputs (first name, last name, email) into a single user object, this example iterates over a single array of phone numbers, applying <code>validatePhoneNumber</code> to each element and collecting results or errors while keeping the array structure. The Applicative example lifts a function over multiple validated inputs, whereas this maps a validation function across a collection, preserving its shape. This distinction highlights Traversable’s focus on processing each element in a structure, not combining separate values.</p>
 <p>This pattern—mapping a validation function over an array and collecting results or errors—is common in form validation or data processing. However, it’s repetitive and specific to arrays. If you need to validate other structures (like optional values or nested objects), you write custom code for each. There’s no type safety to ensure the validation function and data match, and runtime errors can occur if inputs are unexpected types, like non-strings in the <code>phones</code> array.</p>
@@ -1273,20 +1307,20 @@ import Data.String.Regex.Unsafe
 import Data.String.Regex.Flags
 newtype PhoneNumber = PhoneNumber String
 instance Show PhoneNumber where
-  show (PhoneNumber s) = &quot;(PhoneNumber &quot; &lt;&gt; show s &lt;&gt; &quot;)&quot;
-phoneNumberRegex = unsafeRegex &quot;^\\d{3}-\\d{3}-\\d{4}$&quot; noFlags
+  show (PhoneNumber s) = "(PhoneNumber " &lt;&gt; show s &lt;&gt; ")"
+phoneNumberRegex = unsafeRegex "^\\d{3}-\\d{3}-\\d{4}$" noFlags
 validatePhoneNumber s = if test phoneNumberRegex s
   then pure (PhoneNumber s)
-  else invalid (singleton &quot;Invalid phone format&quot;)
-phones = [&quot;555-555-5555&quot;, &quot;555-555-0000&quot;]
+  else invalid (singleton "Invalid phone format")
+phones = ["555-555-5555", "555-555-0000"]
 logShow $ traverse validatePhoneNumber phones {- - Validates each phone number -}
-badPhones = [&quot;555-555-5555&quot;, &quot;invalid&quot;]
+badPhones = ["555-555-5555", "invalid"]
 logShow $ traverse validatePhoneNumber badPhones {- - Collects errors -}
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(valid [(PhoneNumber &quot;555-555-5555&quot;),(PhoneNumber &quot;555-555-0000&quot;)])
+<pre><code>(valid [(PhoneNumber "555-555-5555"),(PhoneNumber "555-555-0000")])
 unit
-(invalid ([&quot;Invalid phone format&quot;]))
+(invalid (["Invalid phone format"]))
 unit
 </code></pre>
 <p>For <code>Maybe</code> (optional values):</p>
@@ -1300,20 +1334,20 @@ import Data.Validation.Semigroup (V, invalid)
 import Data.NonEmpty (NonEmpty(..), singleton)
 
 nonEmpty field s = 
-  if s == &quot;&quot; 
-    then invalid (NonEmpty (&quot;Field '&quot; &lt;&gt; field &lt;&gt; &quot;' cannot be empty&quot;) Nil)
+  if s == "" 
+    then invalid (NonEmpty ("Field '" &lt;&gt; field &lt;&gt; "' cannot be empty") Nil)
     else pure s
 
-logShow $ traverse (nonEmpty &quot;Example&quot;) Nothing -- No validation for Nothing
-logShow $ traverse (nonEmpty &quot;Example&quot;) (Just &quot;&quot;) -- Validates Just value
-logShow $ traverse (nonEmpty &quot;Example&quot;) (Just &quot;Testing&quot;) -- Successful validation
+logShow $ traverse (nonEmpty "Example") Nothing -- No validation for Nothing
+logShow $ traverse (nonEmpty "Example") (Just "") -- Validates Just value
+logShow $ traverse (nonEmpty "Example") (Just "Testing") -- Successful validation
 </code></pre>
 <p>Expected output:</p>
 <pre><code>(valid Nothing)
 unit
-(invalid ([&quot;Field 'Example' cannot be empty&quot;]))
+(invalid (["Field 'Example' cannot be empty"]))
 unit
-(valid (Just &quot;Testing&quot;))
+(valid (Just "Testing"))
 unit
 </code></pre>
 <p>The compiler ensures <code>Traversable</code> instances exist and types match, catching errors at compile time. Traversable laws ensure the structure is preserved and effects are combined predictably, unlike JavaScript’s ad hoc validation.</p>
@@ -1339,16 +1373,16 @@ import Data.Traversable (traverse)
 import Data.List.Types (NonEmptyList(..), List(..))
 import Data.Validation.Semigroup (V, invalid)
 import Data.NonEmpty (NonEmpty(..), singleton)
-nonEmpty field s = if s == &quot;&quot;
-  then invalid (NonEmpty (&quot;Field '&quot; &lt;&gt; field &lt;&gt; &quot;' cannot be empty&quot;) Nil)
+nonEmpty field s = if s == ""
+  then invalid (NonEmpty ("Field '" &lt;&gt; field &lt;&gt; "' cannot be empty") Nil)
   else pure s
-logShow $ traverse (nonEmpty &quot;Name&quot;) [&quot;Phillip&quot;, &quot;Freeman&quot;] {- - Validates each name -}
-logShow $ traverse (nonEmpty &quot;Name&quot;) [&quot;Phillip&quot;, &quot;&quot;] {- - Collects errors -}
+logShow $ traverse (nonEmpty "Name") ["Phillip", "Freeman"] {- - Validates each name -}
+logShow $ traverse (nonEmpty "Name") ["Phillip", ""] {- - Collects errors -}
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(valid [&quot;Phillip&quot;,&quot;Freeman&quot;])
+<pre><code>(valid ["Phillip","Freeman"])
 unit
-(invalid ([&quot;Field 'Name' cannot be empty&quot;]))
+(invalid (["Field 'Name' cannot be empty"]))
 unit
 </code></pre>
 <p>This generalizes validation across structures, similar to JavaScript’s array validation but safer and more flexible.</p>
@@ -1364,16 +1398,16 @@ import Data.Traversable (traverse)
 import Data.List.Types (NonEmptyList(..), List(..))
 import Data.Validation.Semigroup (V, invalid)
 import Data.NonEmpty (NonEmpty(..), singleton)
-nonEmpty field s = if s == &quot;&quot;
-  then invalid (NonEmpty (&quot;Field '&quot; &lt;&gt; field &lt;&gt; &quot;' cannot be empty&quot;) Nil)
+nonEmpty field s = if s == ""
+  then invalid (NonEmpty ("Field '" &lt;&gt; field &lt;&gt; "' cannot be empty") Nil)
   else pure s
-logShow $ traverse (nonEmpty &quot;Name&quot;) [&quot;Phillip&quot;, &quot;Freeman&quot;] {- - Validate names in array -}
-logShow $ traverse (nonEmpty &quot;Name&quot;) [&quot;Phillip&quot;, &quot;&quot;] {- - Collect errors -}
+logShow $ traverse (nonEmpty "Name") ["Phillip", "Freeman"] {- - Validate names in array -}
+logShow $ traverse (nonEmpty "Name") ["Phillip", ""] {- - Collect errors -}
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(valid [&quot;Phillip&quot;,&quot;Freeman&quot;])
+<pre><code>(valid ["Phillip","Freeman"])
 unit
-(invalid ([&quot;Field 'Name' cannot be empty&quot;]))
+(invalid (["Field 'Name' cannot be empty"]))
 unit
 </code></pre>
 </li>
@@ -1386,19 +1420,19 @@ import Data.Traversable (traverse)
 import Data.List.Types (NonEmptyList(..), List(..))
 import Data.Validation.Semigroup (V, invalid)
 import Data.NonEmpty (NonEmpty(..), singleton)
-nonEmpty field s = if s == &quot;&quot;
-  then invalid (NonEmpty (&quot;Field '&quot; &lt;&gt; field &lt;&gt; &quot;' cannot be empty&quot;) Nil)
+nonEmpty field s = if s == ""
+  then invalid (NonEmpty ("Field '" &lt;&gt; field &lt;&gt; "' cannot be empty") Nil)
   else pure s
-logShow $ traverse (nonEmpty &quot;Example&quot;) Nothing {- - No validation for Nothing -}
-logShow $ traverse (nonEmpty &quot;Example&quot;) (Just &quot;&quot;) {- - Validate Just value -}
-logShow $ traverse (nonEmpty &quot;Example&quot;) (Just &quot;Testing&quot;) {- - Successful validation -}
+logShow $ traverse (nonEmpty "Example") Nothing {- - No validation for Nothing -}
+logShow $ traverse (nonEmpty "Example") (Just "") {- - Validate Just value -}
+logShow $ traverse (nonEmpty "Example") (Just "Testing") {- - Successful validation -}
 </code></pre>
 <p>Expected output:</p>
 <pre><code>(valid Nothing)
 unit
-(invalid ([&quot;Field 'Example' cannot be empty&quot;]))
+(invalid (["Field 'Example' cannot be empty"]))
 unit
-(valid (Just &quot;Testing&quot;))
+(valid (Just "Testing"))
 unit
 </code></pre>
 </li>
@@ -1415,18 +1449,18 @@ function fetchProfile(profileId) {
   return Promise.resolve({ profileId, addressId: `address-${profileId}` });
 }
 function fetchCity(addressId) {
-  return Promise.resolve({ addressId, city: &quot;Faketown&quot; });
+  return Promise.resolve({ addressId, city: "Faketown" });
 }
 fetchUser(123)
   .then(user =&gt; fetchProfile(user.profileId))
   .then(profile =&gt; fetchCity(profile.addressId))
   .then(address =&gt; ({ city: address.city }))
-  .then(console.log); // { city: &quot;Faketown&quot; }
+  .then(console.log); // { city: "Faketown" }
 fetchUser(null)
   .then(user =&gt; fetchProfile(user.profileId))
   .then(profile =&gt; fetchCity(profile.addressId))
   .then(address =&gt; ({ city: address.city }))
-  .catch(error =&gt; console.log({ error: error.message })); // { error: &quot;Cannot read properties of null&quot; }
+  .catch(error =&gt; console.log({ error: error.message })); // { error: "Cannot read properties of null" }
 </code></pre>
 <p>This pattern—chaining operations where each step depends on the previous result—is common in JavaScript for handling async tasks like API calls or database queries. You use <code>.then</code> to sequence the operations, passing the result of one to the next. However, it’s error-prone: if any step fails (e.g., <code>user</code> is <code>null</code>), you get runtime errors, and you need <code>.catch</code> to handle failures. Extending this to other contexts (like optional values or arrays) requires custom code, and there’s no type safety to ensure each step’s output matches the next step’s input.</p>
 <h3 id="purescripts-monad-structured-sequential-computations"><a class="header" href="#purescripts-monad-structured-sequential-computations">PureScript’s <code>Monad</code>: Structured Sequential Computations</a></h3>
@@ -1458,15 +1492,15 @@ userCity userId users profiles addresses = do
   address &lt;- lookupCity profile.addressId addresses {- - Look up address by addressId -}
   pure address.city {- - Return the city -}
 
-users = Map.fromFoldable [ Tuple &quot;user123&quot; { userId: &quot;user123&quot;, profileId: &quot;profile-123&quot; } ]
-profiles = Map.fromFoldable [ Tuple &quot;profile-123&quot; { profileId: &quot;profile-123&quot;, addressId: &quot;address-123&quot; } ]
-addresses = Map.fromFoldable [ Tuple &quot;address-123&quot; { addressId: &quot;address-123&quot;, city: &quot;Faketown&quot; } ]
+users = Map.fromFoldable [ Tuple "user123" { userId: "user123", profileId: "profile-123" } ]
+profiles = Map.fromFoldable [ Tuple "profile-123" { profileId: "profile-123", addressId: "address-123" } ]
+addresses = Map.fromFoldable [ Tuple "address-123" { addressId: "address-123", city: "Faketown" } ]
 
-logShow $ userCity &quot;user123&quot; users profiles addresses 
-logShow $ userCity &quot;wrong&quot; users profiles addresses 
+logShow $ userCity "user123" users profiles addresses 
+logShow $ userCity "wrong" users profiles addresses 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just &quot;Faketown&quot;)
+<pre><code>(Just "Faketown")
 unit
 Nothing
 unit
@@ -1522,15 +1556,15 @@ userCity userId users profiles addresses = do
   address &lt;- lookupCity profile.addressId addresses {- - Look up address by addressId -}
   pure address.city {- - Return the city -}
 
-users = Map.fromFoldable [ Tuple &quot;user123&quot; { userId: &quot;user123&quot;, profileId: &quot;profile-123&quot; } ]
-profiles = Map.fromFoldable [ Tuple &quot;profile-123&quot; { profileId: &quot;profile-123&quot;, addressId: &quot;address-123&quot; } ]
-addresses = Map.fromFoldable [ Tuple &quot;address-123&quot; { addressId: &quot;address-123&quot;, city: &quot;Faketown&quot; } ]
+users = Map.fromFoldable [ Tuple "user123" { userId: "user123", profileId: "profile-123" } ]
+profiles = Map.fromFoldable [ Tuple "profile-123" { profileId: "profile-123", addressId: "address-123" } ]
+addresses = Map.fromFoldable [ Tuple "address-123" { addressId: "address-123", city: "Faketown" } ]
 
-logShow $ userCity &quot;user123&quot; users profiles addresses 
-logShow $ userCity &quot;wrong&quot; users profiles addresses 
+logShow $ userCity "user123" users profiles addresses 
+logShow $ userCity "wrong" users profiles addresses 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just &quot;Faketown&quot;)
+<pre><code>(Just "Faketown")
 unit
 Nothing
 unit
@@ -1557,15 +1591,15 @@ userCity userId users profiles addresses = do
   address &lt;- lookupCity profile.addressId addresses {- - Look up address by addressId -}
   pure address.city {- - Return the city -}
 
-users = Map.fromFoldable [ Tuple &quot;user123&quot; { userId: &quot;user123&quot;, profileId: &quot;profile-123&quot; } ]
-profiles = Map.fromFoldable [ Tuple &quot;profile-123&quot; { profileId: &quot;profile-123&quot;, addressId: &quot;address-123&quot; } ]
-addresses = Map.fromFoldable [ Tuple &quot;address-123&quot; { addressId: &quot;address-123&quot;, city: &quot;Faketown&quot; } ]
+users = Map.fromFoldable [ Tuple "user123" { userId: "user123", profileId: "profile-123" } ]
+profiles = Map.fromFoldable [ Tuple "profile-123" { profileId: "profile-123", addressId: "address-123" } ]
+addresses = Map.fromFoldable [ Tuple "address-123" { addressId: "address-123", city: "Faketown" } ]
 
-logShow $ userCity &quot;user123&quot; users profiles addresses 
-logShow $ userCity &quot;wrong&quot; users profiles addresses 
+logShow $ userCity "user123" users profiles addresses 
+logShow $ userCity "wrong" users profiles addresses 
 </code></pre>
 <p>Expected output:</p>
-<pre><code>(Just &quot;Faketown&quot;)
+<pre><code>(Just "Faketown")
 unit
 Nothing
 unit
@@ -1659,22 +1693,6 @@ unit
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -1699,5 +1717,7 @@ unit
         });
         </script>
 
+
+    </div>
     </body>
 </html>
