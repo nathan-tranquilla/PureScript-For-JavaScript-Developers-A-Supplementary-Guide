@@ -252,19 +252,6 @@ logShow $ map (\x -&gt; x * 2) (Tuple "fixed" 42)
 <pre><code>(Tuple "fixed" 84)
 unit
 </code></pre>
-<p>For asynchronous effects (like JS promises, via <code>Aff</code> from <code>purescript-aff</code>):</p>
-<p>In PSCi (assuming <code>Aff</code> is installed):</p>
-<pre><code class="language-purescript">import Aff (Aff, launchAff_)
-import Effect.Console
-import Effect.Class (liftEffect)
-launchAff_ do
-  doubled &lt;- map (\x -&gt; x * 2) (pure 42 :: Aff Int)  // pure is like Promise.resolve
-  liftEffect $ logShow doubled
-</code></pre>
-<p>Expected output:</p>
-<pre><code>84
-unit
-</code></pre>
 <p>The compiler ensures <code>Functor</code> instances exist, catching errors at compile time. Laws make mapping reliable—e.g., composition preserves order without side effects.</p>
 <h3 id="why-purescripts-functor-is-helpful"><a class="header" href="#why-purescripts-functor-is-helpful">Why PureScript’s <code>Functor</code> Is Helpful</a></h3>
 <ol>
@@ -272,7 +259,7 @@ unit
 <p><strong>Compile-Time Safety</strong>: In JS, mapping non-mappable types fails at runtime. Functor requires instances, catching errors early.</p>
 </li>
 <li>
-<p><strong>Consistent Mapping</strong>: Uniform <code>map</code> for arrays, <code>Maybe</code>, <code>Tuple</code>, asynchronous effects (<code>Aff</code>), maps— no custom hacks.</p>
+<p><strong>Consistent Mapping</strong>: Uniform <code>map</code> for arrays, <code>Maybe</code>, <code>Tuple</code>, maps— no custom hacks.</p>
 </li>
 <li>
 <p><strong>Laws for Predictability</strong>: Identity and composition ensure mapping behaves as expected, unlike JS where chained maps can surprise (e.g., with side effects).</p>
