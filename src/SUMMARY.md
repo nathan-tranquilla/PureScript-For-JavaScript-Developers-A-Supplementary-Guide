@@ -1,6 +1,6 @@
 # Summary
 
-[Introduction](../README.md)
+[Introduction](./Introduction.md)
 
 - [How To Use This Booklet](./how_to_use_this_booklet.md)
 - [Type Classes](./Type_Classes.md)
