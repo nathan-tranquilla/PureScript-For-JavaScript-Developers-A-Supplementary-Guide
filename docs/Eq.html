@@ -201,7 +201,9 @@ console.log(areUsersEqual(profile1, profile2)); // Error: settings not checked
   eq :: a -&gt; a -&gt; Boolean
 </code></pre>
 <p>The <code>==</code> operator is an alias for <code>eq</code>, and any type used with <code>==</code> must have an <code>Eq</code> instance, enforced by the compiler. Let’s define the <code>profile</code> example in PureScript:</p>
-<pre><code class="language-purescript">newtype User = User { id :: Int, name :: String }
+<pre><code class="language-purescript">import Prelude
+
+newtype User = User { id :: Int, name :: String }
 newtype Profile = Profile { user :: User, settings :: Settings }
 newtype Settings = Settings { theme :: String }
 
@@ -213,13 +215,13 @@ instance Eq Settings where
 
 instance Eq Profile where
   eq (Profile p1) (Profile p2) = p1.user == p2.user &amp;&amp; p1.settings == p2.settings
+
+profile1 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
+profile2 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
+profile1 == profile2
 </code></pre>
-<p>In PSCi:</p>
-<pre><code class="language-purescript">&gt; import Prelude
-&gt; let profile1 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
-&gt; let profile2 = Profile { user: User { id: 1, name: "Alice" }, settings: Settings { theme: "dark" } }
-&gt; profile1 == profile2
-true
+<p>Expected Output:</p>
+<pre><code>true
 </code></pre>
 <p>This comparison is clean, and the compiler ensures every type used with <code>==</code> has an <code>Eq</code> instance. Trying to compare unsupported types fails at compile time:</p>
 <pre><code class="language-purescript">&gt; (\n -&gt; n + 1) == (\n -&gt; n + 1)

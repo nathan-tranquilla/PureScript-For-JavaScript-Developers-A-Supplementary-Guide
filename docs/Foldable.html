@@ -284,12 +284,12 @@ import Data.Foldable
 import Data.Maybe
 import Data.Tuple
 logShow $ foldMap (\s -&gt; s &lt;&gt; " logged in") (Just "user1")
-logShow $ foldMap (\s -&gt; "status: " &lt;&gt; s) (Tuple "user2" " active")
+logShow $ foldMap (\s -&gt; "status: " &lt;&gt; s) (Tuple "user2" "active")
 </code></pre>
 <p>Expected output:</p>
 <pre><code>"user1 logged in"
 unit
-" active status:"
+"status: active"
 unit
 </code></pre>
 <p>This generalizes reduce, making code reusable across structures.</p>

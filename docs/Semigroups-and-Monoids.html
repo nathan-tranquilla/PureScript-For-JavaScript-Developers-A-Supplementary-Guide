@@ -216,7 +216,12 @@ class Semigroup m &lt;= Monoid m where
   mempty :: m
 </code></pre>
 <p>Strings and arrays have instances, but you can define for custom types like <code>Profile</code> with nested <code>Address</code>. To demonstrate associativity, let's define a <code>Profile</code> type with deep merging for the nested <code>address</code> fields:</p>
-<pre><code class="language-purescript">newtype Address = Address { street :: Maybe String, city :: Maybe String, zip :: Maybe String }
+<pre><code class="language-purescript">import Prelude
+import Effect.Console
+import Data.Maybe
+import Control.Alt ((&lt;|&gt;))
+
+newtype Address = Address { street :: Maybe String, city :: Maybe String, zip :: Maybe String }
 
 instance Semigroup Address where
   append (Address a1) (Address a2) = Address {
@@ -236,7 +241,7 @@ newtype Profile = Profile { name :: Maybe String, address :: Address }
 instance Semigroup Profile where
   append (Profile p1) (Profile p2) = Profile {
     name: p1.name &lt;|&gt; p2.name,
-    address: p1.address &lt;&gt; p2.address  // Deep merge for address
+    address: p1.address &lt;&gt; p2.address
   }
 
 instance Monoid Profile where
@@ -244,17 +249,17 @@ instance Monoid Profile where
 
 instance Show Profile where
   show (Profile p) = "(Profile " &lt;&gt; show p &lt;&gt; ")"
+
+a = Profile { name: Just "Alice", address: Address { street: Just "123 Main St", city: Nothing, zip: Nothing } }
+b = Profile { name: Just "Bob", address: Address { street: Nothing, city: Just "New York", zip: Nothing } }
+c = Profile { name: Just "Charlie", address: Address { street: Nothing, city: Nothing, zip: Just "10001" } }
+
+logShow $ (a &lt;&gt; b) &lt;&gt; c
+logShow $ a &lt;&gt; (b &lt;&gt; c)
+
 </code></pre>
-<p>In PSCi:</p>
-<pre><code class="language-purescript">&gt; import Prelude
-&gt; import Effect.Console
-&gt; import Data.Maybe
-&gt; import Control.Alt ((&lt;|&gt;))
-&gt; let a = Profile { name: Just "Alice", address: Address { street: Just "123 Main St", city: Nothing, zip: Nothing } }
-&gt; let b = Profile { name: Just "Bob", address: Address { street: Nothing, city: Just "New York", zip: Nothing } }
-&gt; let c = Profile { name: Just "Charlie", address: Address { street: Nothing, city: Nothing, zip: Just "10001" } }
-&gt; logShow $ (a &lt;&gt; b) &lt;&gt; c
-(Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })
+<p>Expected output:</p>
+<pre><code>(Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })
 unit
 &gt; logShow $ a &lt;&gt; (b &lt;&gt; c)
 (Profile { name: (Just "Alice"), address: (Address { street: (Just "123 Main St"), city: (Just "New York"), zip: (Just "10001") }) })

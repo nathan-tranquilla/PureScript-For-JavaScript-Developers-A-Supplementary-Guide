@@ -204,7 +204,11 @@ class Eq a &lt;= Ord a where
   compare :: a -&gt; a -&gt; Ordering
 </code></pre>
 <p>The <code>compare</code> function returns <code>LT</code> (less than), <code>EQ</code> (equal), or <code>GT</code> (greater than), and operators like <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, and <code>&gt;=</code> are built on <code>compare</code>. The <code>Eq</code> superclass ensures that <code>compare a b == EQ</code> aligns with <code>a == b</code>. Here’s the <code>profile</code> example in PureScript:</p>
-<pre><code class="language-purescript">newtype AppUser = AppUser { id :: Int, name :: String }
+<pre><code class="language-purescript">import Prelude
+import Data.Array
+import Effect.Console
+
+newtype AppUser = AppUser { id :: Int, name :: String }
 newtype Settings = Settings { theme :: String }
 newtype Profile = Profile { user :: AppUser, settings :: Settings }
 
@@ -220,20 +224,34 @@ instance Ord Settings where
 
 instance Ord Profile where
   compare (Profile p1) (Profile p2) = compare p1.user p2.user
+
+instance Show Settings where
+  show (Settings { theme }) = "(Settings " &lt;&gt; show theme &lt;&gt; " )"
+
+instance Show AppUser where
+  show (AppUser { id, name }) = "(AppUser " &lt;&gt; show id &lt;&gt; " " &lt;&gt; show name &lt;&gt; ")"
+
+instance Show Profile where
+  show (Profile { user, settings}) = "(Profile " &lt;&gt; show user &lt;&gt; " " &lt;&gt; show settings &lt;&gt; ")"
+
+profile1 = Profile { user: AppUser { id: 2, name: "Bob" }, settings: Settings { theme: "dark" } }
+profile2 = Profile { user: AppUser { id: 1, name: "Alice" }, settings: Settings { theme: "light" } }
+
+compare profile1 profile2
+
+profile1 &lt; profile2
+
+logShow $ sort [profile1, profile2]
+
+
 </code></pre>
-<p>In PSCi:</p>
-<pre><code class="language-purescript">&gt; import Prelude
-&gt; let profile1 = Profile { user: UniqueAppUser { id: 2, name: "Bob" }, settings: Settings { theme: "dark" } }
-&gt; let profile2 = Profile { user: UniqueAppUser { id: 1, name: "Alice" }, settings: Settings { theme: "light" } }
-&gt; compare profile1 profile2
-GT
-&gt; profile1 &lt; profile2
+<p>Expected Output:</p>
+<pre><code>GT
+
 false
-&gt; import Data.Array
-&gt; import Effect.Console
-&gt; logShow $ sort [profile1, profile2]
-[(Profile (UniqueAppUser 1 "Alice") (Settings "light")), (Profile (UniqueAppUser 2 "Bob") (Settings "dark"))]
-unit
+
+[(Profile (AppUser 1 "Alice") (Settings "light")), (Profile (AppUser 2 "Bob") (Settings "dark"))]
+
 </code></pre>
 <p>The <code>sort</code> function uses <code>Ord</code> to order by <code>user.id</code>. The compiler ensures every type used with <code>compare</code> or <code>&lt;</code> has an <code>Ord</code> instance, preventing errors:</p>
 <pre><code class="language-purescript">&gt; compare (\n -&gt; n + 1) (\n -&gt; n + 1)
@@ -245,7 +263,7 @@ unit
 <p><strong>No Custom Sort Functions</strong>: Unlike JavaScript’s <code>sort</code> with one-off comparison functions, <code>Ord</code> defines a reusable <code>compare</code> function per type, making ordering consistent.</p>
 </li>
 <li>
-<p><strong>Composes Effortlessly</strong>: The <code>Profile</code> instance reuses <code>UniqueAppUser</code>’s <code>Ord</code> instance, which reuses <code>Int</code>’s. No need to manually dig into nested fields like in JavaScript.</p>
+<p><strong>Composes Effortlessly</strong>: The <code>Profile</code> instance reuses <code>AppUser</code>’s <code>Ord</code> instance, which reuses <code>Int</code>’s. No need to manually dig into nested fields like in JavaScript.</p>
 </li>
 <li>
 <p><strong>Type-Safe Sorting</strong>: Compile-time checks ensure <code>Ord</code> instances exist, eliminating runtime errors from undefined comparisons.</p>
@@ -275,35 +293,57 @@ LT
 <li>
 <p><strong>Compare a Custom Type</strong>:</p>
 <pre><code class="language-purescript">import Prelude
-newtype UniqueAppUser = UniqueAppUser { id :: Int, name :: String }
-derive instance Eq UniqueAppUser
-instance Show UniqueAppUser where
-  show (UniqueAppUser { id, name }) = "(UniqueAppUser " &lt;&gt; show id &lt;&gt; " " &lt;&gt; show name &lt;&gt; ")"
-instance Ord UniqueAppUser where
-  compare (UniqueAppUser u1) (UniqueAppUser u2) = compare u1.id u2.id
-compare (UniqueAppUser { id: 1, name: "Alice" }) (UniqueAppUser { id: 2, name: "Bob" })
-(UniqueAppUser { id: 1, name: "Alice" }) &lt; (UniqueAppUser { id: 2, name: "Bob" })
+import Data.Array
+import Effect.Console
+
+newtype AppUser = AppUser { id :: Int, name :: String }
+newtype Settings = Settings { theme :: String }
+newtype Profile = Profile { user :: AppUser, settings :: Settings }
+
+derive instance Eq AppUser
+derive instance Eq Settings
+derive instance Eq Profile
+
+instance Ord AppUser where
+  compare (AppUser u1) (AppUser u2) = compare u1.id u2.id
+
+instance Ord Settings where
+  compare (Settings s1) (Settings s2) = compare s1.theme s2.theme
+
+instance Ord Profile where
+  compare (Profile p1) (Profile p2) = compare p1.user p2.user
+
+instance Show Settings where
+  show (Settings { theme }) = "(Settings " &lt;&gt; show theme &lt;&gt; " )"
+
+instance Show AppUser where
+  show (AppUser { id, name }) = "(AppUser " &lt;&gt; show id &lt;&gt; " " &lt;&gt; show name &lt;&gt; ")"
+
+instance Show Profile where
+  show (Profile { user, settings}) = "(Profile " &lt;&gt; show user &lt;&gt; " " &lt;&gt; show settings &lt;&gt; ")"
+
+profile1 = Profile { user: AppUser { id: 2, name: "Bob" }, settings: Settings { theme: "dark" } }
+profile2 = Profile { user: AppUser { id: 1, name: "Alice" }, settings: Settings { theme: "light" } }
+
+compare profile1 profile2
+
+profile1 &lt; profile2
+
+
 </code></pre>
-<p>Expected output:</p>
-<pre><code>LT
-true
+<p>Expected Output:</p>
+<pre><code>GT
+
+false
+
 </code></pre>
 </li>
 <li>
 <p><strong>Sort an Array</strong>:</p>
-<pre><code class="language-purescript">import Prelude
-import Data.Array
-import Effect.Console
-newtype UniqueAppUser = UniqueAppUser { id :: Int, name :: String }
-derive instance Eq UniqueAppUser
-instance Show UniqueAppUser where
-  show (UniqueAppUser { id, name }) = "(UniqueAppUser " &lt;&gt; show id &lt;&gt; " " &lt;&gt; show name &lt;&gt; ")"
-instance Ord UniqueAppUser where
-  compare (UniqueAppUser u1) (UniqueAppUser u2) = compare u1.id u2.id
-logShow $ sort [UniqueAppUser { id: 2, name: "Bob" }, UniqueAppUser { id: 1, name: "Alice" }]
+<pre><code class="language-purescript">logShow $ sort [profile1, profile2]
 </code></pre>
 <p>Expected output:</p>
-<pre><code>[(UniqueAppUser 1 "Alice"), (UniqueAppUser 2 "Bob")]
+<pre><code>[(Profile (AppUser 1 "Alice") (Settings "light")), (Profile (AppUser 2 "Bob") (Settings "dark"))]
 unit
 </code></pre>
 </li>
