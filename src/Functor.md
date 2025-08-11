@@ -115,31 +115,12 @@ Expected output:
 unit
 ```
 
-For asynchronous effects (like JS promises, via `Aff` from `purescript-aff`):
-
-In PSCi (assuming `Aff` is installed):
-
-```purescript
-import Aff (Aff, launchAff_)
-import Effect.Console
-import Effect.Class (liftEffect)
-launchAff_ do
-  doubled <- map (\x -> x * 2) (pure 42 :: Aff Int)  // pure is like Promise.resolve
-  liftEffect $ logShow doubled
-```
-
-Expected output:
-```
-84
-unit
-```
-
 The compiler ensures `Functor` instances exist, catching errors at compile time. Laws make mapping reliable—e.g., composition preserves order without side effects.
 
 ### Why PureScript’s `Functor` Is Helpful
 1. **Compile-Time Safety**: In JS, mapping non-mappable types fails at runtime. Functor requires instances, catching errors early.
 
-2. **Consistent Mapping**: Uniform `map` for arrays, `Maybe`, `Tuple`, asynchronous effects (`Aff`), maps— no custom hacks.
+2. **Consistent Mapping**: Uniform `map` for arrays, `Maybe`, `Tuple`, maps— no custom hacks.
 
 3. **Laws for Predictability**: Identity and composition ensure mapping behaves as expected, unlike JS where chained maps can surprise (e.g., with side effects).
 
