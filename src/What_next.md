@@ -2,6 +2,9 @@
 
 Congratulations on working through **PureScript for JavaScript Developers**! You’ve explored key type classes from Chapters 6–8 of *PureScript by Example*, connecting familiar JavaScript patterns—like string conversion, equality checks, array operations, form validation, and Promise chaining—to PureScript’s structured, type-safe abstractions. By now, you should feel confident recognizing how `Show`, `Eq`, `Ord`, `Semigroup`, `Monoid`, `Functor`, `Foldable`, `Applicative`, `Traversable`, and `Monad` formalize JavaScript’s informal practices, making your code more reliable without exceeding the complexity of modern web development.
 
+### Make A Financial Contribution
+If this booklet has helped you bridge JavaScript and PureScript, please consider [making a donation](https://github.com/sponsors/nathan-tranquilla).
+
 ### Where to Go from Here
 This booklet has prepared you to dive deeper into PureScript by bridging JavaScript’s dynamic patterns with PureScript’s type-safe type classes. To build on this foundation, we recommend returning to *PureScript by Example* and picking up with the `Effect` and `Aff` monads in Chapter 8 and beyond:
 
