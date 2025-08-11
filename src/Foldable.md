@@ -161,7 +161,7 @@ import Data.Foldable
 import Data.Maybe
 import Data.Tuple
 logShow $ foldMap (\s -> s <> " logged in") (Just "user1")
-logShow $ foldMap (\s -> "status: " <> s) (Tuple "user2" " active")
+logShow $ foldMap (\s -> "status: " <> s) (Tuple "user2" "active")
 ```
 
 Expected output:
@@ -169,7 +169,7 @@ Expected output:
 ```
 "user1 logged in"
 unit
-" active status:"
+"status: active"
 unit
 ```
 
